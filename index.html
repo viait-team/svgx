@@ -193,9 +193,9 @@
                 } else if (!hasViewBox) {
                     console.warn('[VIAIT] SVG has no viewBox and getBBox() is not available. Rotation origin defaulting to 0,0. SVG content might not rotate around its visual center.');
                 }
-
-                cx = 0;
-                cy = 0;
+ 
+                cx = 0; // Default center X
+                cy = 0; // Default center Y           
                 // SVG transform syntax for rotation around a point: rotate(angle cx cy)
                 const svgTransform = `rotate(${rotationDegree} ${cx} ${cy})`;
                 
