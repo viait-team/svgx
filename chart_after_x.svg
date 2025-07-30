@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="highcharts-root" style="font-family: sans-serif; font-size: 1rem;" xmlns="http://www.w3.org/2000/svg" width="1185.6" height="562.4" viewBox="0 0 1200 600" aria-label="Interactive chart" aria-hidden="false" ylm="[2, 4.8, 53.5, 528.5]">
+  <desc aria-hidden="true">Created with Highcharts 12.3.0</desc>
+  <defs aria-hidden="true">
+    <filter id="highcharts-drop-shadow-1">
+      <feDropShadow dx="1" dy="1" flood-color="#000000" flood-opacity="0.75" stdDeviation="2.5"></feDropShadow>
+    </filter>
+    <clipPath id="highcharts-bjrx48a-576-">
+      <rect x="0" y="0" width="1114" height="474" fill="none"></rect>
+    </clipPath>
+  </defs>
+  <rect fill="rgba(255, 255, 255, 1)" class="highcharts-background" filter="none" x="0" y="0" width="1200" height="600" rx="0" ry="0" aria-hidden="true"></rect>
+  <rect fill="#FFFFFF" class="highcharts-plot-background" x="76" y="53" width="1114" height="475" filter="none" aria-hidden="true"></rect>
+  <g class="highcharts-pane-group" data-z-index="0" aria-hidden="true"></g>
+  <g class="highcharts-plot-bands-0" data-z-index="0" aria-hidden="true">
+    <path fill="#D8D8D8" class="highcharts-plot-band " d="M 76.5 53 L 76.5 528 L 76.5 528 L 76.5 53 Z"></path>
+    <path fill="#D8D8D8" class="highcharts-plot-band " d="M 76.5 53 L 76.5 528 L 76.5 528 L 76.5 53 Z"></path>
+    <path fill="#D8D8D8" class="highcharts-plot-band " d="M 76.5 53 L 76.5 528 L 76.5 528 L 76.5 53 Z"></path>
+  </g>
+  <g class="highcharts-grid highcharts-xaxis-grid" data-z-index="1" aria-hidden="true">
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 101.5 53 L 101.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 194.5 53 L 194.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 287.5 53 L 287.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 380.5 53 L 380.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 473.5 53 L 473.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 565.5 53 L 565.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 659.5 53 L 659.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 752.5 53 L 752.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 843.5 53 L 843.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 937.5 53 L 937.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 1030.5 53 L 1030.5 528" opacity="1"></path>
+    <path fill="none" stroke="#e6e6e6" stroke-width="0" stroke-dasharray="none" data-z-index="1" class="highcharts-grid-line" d="M 1122.5 53 L 1122.5 528" opacity="1"></path>
+  </g>
+  <g class="highcharts-grid highcharts-yaxis-grid" data-z-index="1" aria-hidden="true">
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 528.5 L 1190 528.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 460.5 L 1190 460.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 392.5 L 1190 392.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 324.5 L 1190 324.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 256.5 L 1190 256.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 188.5 L 1190 188.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 120.5 L 1190 120.5" opacity="1"></path>
+    <path fill="none" stroke="#CEC6B9" stroke-width="1" stroke-dasharray="1,3" data-z-index="1" class="highcharts-grid-line" d="M 76 53.5 L 1190 53.5" opacity="1"></path>
+  </g>
+  <rect fill="none" class="highcharts-plot-border" data-z-index="1" stroke="#cccccc" stroke-width="0" x="76" y="53" width="1114" height="475" aria-hidden="true"></rect>
+  <g class="highcharts-axis highcharts-xaxis" data-z-index="2" aria-hidden="true">
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 101.75 528 L 101.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 194.75 528 L 194.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 286.75 528 L 286.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 380.75 528 L 380.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 473.75 528 L 473.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 565.75 528 L 565.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 658.75 528 L 658.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 751.75 528 L 751.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 843.75 528 L 843.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 937.75 528 L 937.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 1030.75 528 L 1030.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-tick" stroke="rgb(30, 41, 59)" stroke-width="1.5" d="M 1121.75 528 L 1121.75 538" opacity="1"></path>
+    <path fill="none" class="highcharts-axis-line" stroke="rgb(30, 41, 59)" stroke-width="1.5" data-z-index="7" d="M 76 527.75 L 1190 527.75"></path>
+  </g>
+  <g class="highcharts-axis highcharts-yaxis" data-z-index="2" aria-hidden="true">
+    <text x="23.63749885559082" data-z-index="7" text-anchor="middle" transform="translate(0,0) rotate(270 23.63749885559082 290.5)" class="highcharts-axis-title" style="font-size: 0.8em; fill: rgb(51, 65, 85);" y="290.5">Percent</text>
+    <path fill="none" class="highcharts-axis-line" stroke="#CEC6B9" stroke-width="0" data-z-index="7" d="M 76 53 L 76 528"></path>
+  </g>
+  <g class="highcharts-series-group" data-z-index="3" filter="none" aria-hidden="false">
+    <g class="methodology-uncertainty-container">
+      <path d="M 101.99 143.44 L 124.87 82.37 L 148.50 125.99 L 171.41 195.79 L 195.05 189.97 L 218.68 168.16 L 240.80 168.16 L 264.40 120.17 L 287.28 128.90 L 310.91 153.62 L 333.79 162.34 L 357.43 217.60 L 381.06 239.41 L 403.94 184.15 L 427.58 146.35 L 450.48 141.98 L 472.50 109.48 L 474.12 107.09 L 476.50 109.72 L 497.76 133.26 L 519.11 157.98 L 540.50 141.39 L 542.71 140.44 L 544.50 140.91 L 565.59 137.62 L 589.22 143.44 L 610.50 128.30 L 612.10 127.44 L 614.50 123.90 L 635.74 92.55 L 658.45 77.17 L 659.37 76.55 L 659.98 76.67 L 681.33 80.73 L 682.25 80.91 L 704.96 89.30 L 705.88 89.64 L 726.31 90.85 L 727.84 90.64 L 728.79 90.50 L 751.48 87.08 L 752.43 86.92 L 774.35 83.22 L 775.11 83.09 L 776.07 82.89 L 795.70 78.81 L 796.46 78.65 L 797.42 78.45 L 820.10 73.80 L 821.02 74.01 L 842.97 79.04 L 843.90 79.24 L 865.09 83.81 L 866.61 84.14 L 867.53 84.34 L 889.49 89.11 L 890.41 89.30 L 913.12 93.95 L 914.04 94.13 L 936.76 98.67 L 937.68 98.85 L 959.64 103.27 L 960.56 103.44 L 982.51 107.62 L 983.27 107.76 L 984.19 107.94 L 1006.15 112.14 L 1007.10 112.31 L 1029.78 116.42 L 1030.74 116.59 L 1051.90 120.32 L 1053.42 120.59 L 1054.37 120.77 L 1073.25 124.38 L 1074.77 124.67 L 1075.72 124.83 L 1098.41 128.64 L 1099.33 128.80 L 1121.28 132.52 L 1122.20 132.67 L 1144.92 131.98 L 1145.84 131.81 L 1167.80 126.22 L 1168.72 125.99 L 1190.67 123.29 L 1191.43 123.19 L 1192.35 123.08 L 1238.87 181.24 L 1238.87 211.78 L 1192.35 211.78 L 1191.43 211.78 L 1190.67 367.73 L 1168.72 364.27 L 1167.80 364.12 L 1145.84 360.58 L 1144.92 360.43 L 1122.20 356.79 L 1121.28 356.64 L 1099.33 352.92 L 1098.41 352.76 L 1075.72 349.17 L 1074.77 349.02 L 1073.25 348.78 L 1054.37 345.18 L 1053.42 345.00 L 1051.90 344.71 L 1030.74 340.72 L 1029.78 340.54 L 1007.10 336.43 L 1006.15 336.26 L 984.19 332.19 L 983.27 332.02 L 982.51 331.88 L 960.56 327.57 L 959.64 327.39 L 937.68 322.97 L 936.76 322.79 L 914.04 318.25 L 913.12 318.07 L 890.41 296.72 L 889.49 295.86 L 867.53 291.39 L 866.61 291.20 L 865.09 290.89 L 843.90 286.00 L 842.97 285.79 L 821.02 280.76 L 820.10 280.55 L 797.42 259.39 L 796.46 258.49 L 795.70 257.78 L 776.07 252.68 L 775.11 252.43 L 774.35 252.23 L 752.43 246.75 L 751.48 246.51 L 728.79 225.53 L 727.84 224.65 L 726.31 223.24 L 705.88 217.40 L 704.96 217.14 L 682.25 211.08 L 681.33 210.83 L 659.98 198.30 L 659.37 198.25 L 658.45 198.18 L 635.74 196.29 L 614.50 194.53 L 612.10 194.33 L 610.50 194.06 L 589.22 190.50 L 565.59 188.52 L 544.50 189.37 L 542.71 188.52 L 540.50 189.37 L 519.11 175.69 L 497.76 169.36 L 476.50 163.20 L 474.12 162.50 L 472.50 163.20 L 450.48 141.98 L 427.58 146.35 L 403.94 184.15 L 381.06 239.41 L 357.43 217.60 L 333.79 162.34 L 310.91 153.62 L 287.28 128.90 L 264.40 120.17 L 240.80 168.16 L 218.68 168.16 L 195.05 189.97 L 171.41 195.79 L 148.50 125.99 L 124.87 82.37 L 101.99 143.44 Z" fill="gray" fill-opacity="0.2" stroke="none" />
+      <path d="M 472.50 163.20 L 472.50 109.48" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 474.12 162.50 L 474.12 107.09" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 476.50 163.20 L 476.50 109.72" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 497.76 169.36 L 497.76 133.26" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 519.11 175.69 L 519.11 157.98" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 540.50 189.37 L 540.50 141.39" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 542.71 188.52 L 542.71 140.44" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 544.50 189.37 L 544.50 140.91" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 565.59 188.52 L 565.59 137.62" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 589.22 190.50 L 589.22 143.44" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 610.50 194.06 L 610.50 128.30" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 612.10 194.33 L 612.10 127.44" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 614.50 194.53 L 614.50 123.90" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 635.74 196.29 L 635.74 92.55" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 658.45 198.18 L 658.45 77.17" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 659.37 198.25 L 659.37 76.55" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 659.98 198.30 L 659.98 76.67" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 681.33 210.83 L 681.33 80.73" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 682.25 211.08 L 682.25 80.91" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 704.96 217.14 L 704.96 89.30" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 705.88 217.40 L 705.88 89.64" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 726.31 223.24 L 726.31 90.85" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 727.84 224.65 L 727.84 90.64" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 728.79 225.53 L 728.79 90.50" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 751.48 246.51 L 751.48 87.08" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 752.43 246.75 L 752.43 86.92" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 774.35 252.23 L 774.35 83.22" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 775.11 252.43 L 775.11 83.09" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 776.07 252.68 L 776.07 82.89" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 795.70 257.78 L 795.70 78.81" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 796.46 258.49 L 796.46 78.65" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 797.42 259.39 L 797.42 78.45" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 820.10 280.55 L 820.10 73.80" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 821.02 280.76 L 821.02 74.01" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 842.97 285.79 L 842.97 79.04" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 843.90 286.00 L 843.90 79.24" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 865.09 290.89 L 865.09 83.81" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 866.61 291.20 L 866.61 84.14" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 867.53 291.39 L 867.53 84.34" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 889.49 295.86 L 889.49 89.11" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 890.41 296.72 L 890.41 89.30" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 913.12 318.07 L 913.12 93.95" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 914.04 318.25 L 914.04 94.13" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 936.76 322.79 L 936.76 98.67" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 937.68 322.97 L 937.68 98.85" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 959.64 327.39 L 959.64 103.27" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 960.56 327.57 L 960.56 103.44" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 982.51 331.88 L 982.51 107.62" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 983.27 332.02 L 983.27 107.76" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 984.19 332.19 L 984.19 107.94" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1006.15 336.26 L 1006.15 112.14" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1007.10 336.43 L 1007.10 112.31" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1029.78 340.54 L 1029.78 116.42" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1030.74 340.72 L 1030.74 116.59" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1051.90 344.71 L 1051.90 120.32" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1053.42 345.00 L 1053.42 120.59" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1054.37 345.18 L 1054.37 120.77" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1073.25 348.78 L 1073.25 124.38" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1074.77 349.02 L 1074.77 124.67" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1075.72 349.17 L 1075.72 124.83" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1098.41 352.76 L 1098.41 128.64" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1099.33 352.92 L 1099.33 128.80" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1121.28 356.64 L 1121.28 132.52" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1122.20 356.79 L 1122.20 132.67" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1144.92 360.43 L 1144.92 131.98" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1145.84 360.58 L 1145.84 131.81" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1167.80 364.12 L 1167.80 126.22" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1168.72 364.27 L 1168.72 125.99" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1190.67 367.73 L 1190.67 123.29" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1191.43 211.78 L 1191.43 123.19" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1192.35 211.78 L 1192.35 123.08" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <path d="M 1238.87 211.78 L 1238.87 181.24" stroke="gray" stroke-opacity="0.2" stroke-width="1" />
+      <text x="1071.04" y="229.82" text-anchor="end" dominant-baseline="central" style="font-size:12px; fill:black; font-style:bold;">Methodology Uncertainty</text>
+    </g>
+    <g class="highcharts-series highcharts-series-1 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 398.12 109.34 L 466.71 129.70 L 536.10 141.33 L 606.25 147.15 L 676.43 152.96 L 745.02 154.42 L 814.41 155.87 L 884.56 157.33 L 954.74 157.33 L 1023.33 157.33 L 1092.72 158.78 L 1162.87 158.78" class="highcharts-graph" data-z-index="1" stroke="#AA4643" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-1 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="U.S. CBO Model, line 2 of 7 with 12 data points." style="outline: none;">
+      <path fill="#AA4643" d="M 396.50 108.48 L 400.50 108.48 L 400.50 110.20 L 396.50 110.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jan 1, 06:00 AM, 4.25. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 464.50 128.84 L 468.50 128.84 L 468.50 130.56 L 464.50 130.56" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.11. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 534.50 140.47 L 538.50 140.47 L 538.50 142.19 L 534.50 142.19" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.03. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 604.50 146.29 L 608.50 146.29 L 608.50 148.01 L 604.50 148.01" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 3.99. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 674.50 152.11 L 678.50 152.11 L 678.50 153.82 L 674.50 153.82" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 3.95. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 743.50 153.56 L 747.50 153.56 L 747.50 155.28 L 743.50 155.28" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 3.94. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 812.50 155.02 L 816.50 155.02 L 816.50 156.73 L 812.50 156.73" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jul 1, 05:00 AM, 3.93. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 882.50 156.47 L 886.50 156.47 L 886.50 158.18 L 882.50 158.18" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Oct 1, 05:00 AM, 3.92. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 952.50 156.47 L 956.50 156.47 L 956.50 158.18 L 952.50 158.18" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Jan 1, 06:00 AM, 3.92. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 1021.50 156.47 L 1025.50 156.47 L 1025.50 158.18 L 1021.50 158.18" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Apr 1, 05:00 AM, 3.92. U.S. CBO Model." style="outline: none;"></path>
+      <path fill="#AA4643" d="M 1090.50 157.92 L 1094.50 157.92 L 1094.50 159.64 L 1090.50 159.64" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jul 1, 05:00 AM, 3.91. U.S. CBO Model." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-2 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 466.71 87.53 L 536.10 102.07 L 606.25 102.07 L 676.43 102.07 L 745.02 102.07 L 814.41 87.53 L 884.56 87.53" class="highcharts-graph" data-z-index="1" stroke="#4572A7" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-2 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="Fannie Mae Forecast, line 3 of 7 with 7 data points." style="outline: none;">
+      <path fill="#4572A7" d="M 464.50 86.67 L 468.50 86.67 L 468.50 88.39 L 464.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.4. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 534.50 101.21 L 538.50 101.21 L 538.50 102.93 L 534.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.3. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 604.50 101.21 L 608.50 101.21 L 608.50 102.93 L 604.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 4.3. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 674.50 101.21 L 678.50 101.21 L 678.50 102.93 L 674.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 4.3. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 743.50 101.21 L 747.50 101.21 L 747.50 102.93 L 743.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 4.3. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 812.50 86.67 L 816.50 86.67 L 816.50 88.39 L 812.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jul 1, 05:00 AM, 4.4. Fannie Mae Forecast." style="outline: none;"></path>
+      <path fill="#4572A7" d="M 882.50 86.67 L 886.50 86.67 L 886.50 88.39 L 882.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Oct 1, 05:00 AM, 4.4. Fannie Mae Forecast." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-3 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 466.71 99.16 L 536.10 106.43 L 606.25 116.61 L 676.43 129.70 L 745.02 131.15" class="highcharts-graph" data-z-index="1" stroke="#80699B" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-3 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="Survey of Professional Forecasters, line 4 of 7 with 5 data points." style="outline: none;">
+      <path fill="#80699B" d="M 464.50 98.31 L 468.50 98.31 L 468.50 100.02 L 464.50 100.02" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.32. Survey of Professional Forecasters." style="outline: none;"></path>
+      <path fill="#80699B" d="M 534.50 105.58 L 538.50 105.58 L 538.50 107.29 L 534.50 107.29" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.27. Survey of Professional Forecasters." style="outline: none;"></path>
+      <path fill="#80699B" d="M 604.50 115.76 L 608.50 115.76 L 608.50 117.47 L 604.50 117.47" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 4.2. Survey of Professional Forecasters." style="outline: none;"></path>
+      <path fill="#80699B" d="M 674.50 128.84 L 678.50 128.84 L 678.50 130.56 L 674.50 130.56" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 4.11. Survey of Professional Forecasters." style="outline: none;"></path>
+      <path fill="#80699B" d="M 743.50 130.30 L 747.50 130.30 L 747.50 132.01 L 743.50 132.01" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 4.1. Survey of Professional Forecasters." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-4 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 466.71 87.53 L 536.10 102.07 L 606.25 109.34 L 676.43 109.34 L 745.02 102.07 L 814.41 94.80 L 884.56 87.53" class="highcharts-graph" data-z-index="1" stroke="#3D96AE" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-4 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="Wells Fargo Economic Outlook, line 5 of 7 with 7 data points." style="outline: none;">
+      <path fill="#3D96AE" d="M 464.50 86.67 L 468.50 86.67 L 468.50 88.39 L 464.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.4. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 534.50 101.21 L 538.50 101.21 L 538.50 102.93 L 534.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.3. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 604.50 108.48 L 608.50 108.48 L 608.50 110.20 L 604.50 110.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 4.25. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 674.50 108.48 L 678.50 108.48 L 678.50 110.20 L 674.50 110.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 4.25. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 743.50 101.21 L 747.50 101.21 L 747.50 102.93 L 743.50 102.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 4.3. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 812.50 93.94 L 816.50 93.94 L 816.50 95.66 L 812.50 95.66" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jul 1, 05:00 AM, 4.35. Wells Fargo Economic Outlook." style="outline: none;"></path>
+      <path fill="#3D96AE" d="M 882.50 86.67 L 886.50 86.67 L 886.50 88.39 L 882.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Oct 1, 05:00 AM, 4.4. Wells Fargo Economic Outlook." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-5 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 466.71 135.52 L 536.10 135.52 L 606.25 134.06 L 676.43 134.06 L 745.02 134.06 L 814.41 132.61 L 884.56 131.15 L 954.74 131.15 L 1023.33 129.70 L 1092.72 129.70 L 1162.87 128.24" class="highcharts-graph" data-z-index="1" stroke="#DB843D" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-5 highcharts-line-series" data-z-index="1" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="WSJ Economic Survey, line 6 of 7 with 11 data points." style="outline: none;">
+      <path fill="#DB843D" d="M 464.50 134.66 L 468.50 134.66 L 468.50 136.37 L 464.50 136.37" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.07. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 534.50 134.66 L 538.50 134.66 L 538.50 136.37 L 534.50 136.37" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.07. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 604.50 133.20 L 608.50 133.20 L 608.50 134.92 L 604.50 134.92" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 4.08. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 674.50 133.20 L 678.50 133.20 L 678.50 134.92 L 674.50 134.92" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 4.08. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 743.50 133.20 L 747.50 133.20 L 747.50 134.92 L 743.50 134.92" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 4.08. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 812.50 131.75 L 816.50 131.75 L 816.50 133.46 L 812.50 133.46" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jul 1, 05:00 AM, 4.09. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 882.50 130.30 L 886.50 130.30 L 886.50 132.01 L 882.50 132.01" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Oct 1, 05:00 AM, 4.1. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 952.50 130.30 L 956.50 130.30 L 956.50 132.01 L 952.50 132.01" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Jan 1, 06:00 AM, 4.1. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 1021.50 128.84 L 1025.50 128.84 L 1025.50 130.56 L 1021.50 130.56" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Apr 1, 05:00 AM, 4.11. WSJ Economic Survey." style="outline: none;"></path>
+      <path fill="#DB843D" d="M 1090.50 128.84 L 1094.50 128.84 L 1094.50 130.56 L 1090.50 130.56" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jul 1, 05:00 AM, 4.11. WSJ Economic Survey." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-0 highcharts-line-series" data-z-index="3" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M 536.10 74.44 L 559.74 39.55 L 583.37 23.55 L 606.25 27.91 L 629.88 36.64 L 652.79 45.36 L 676.43 45.36 L 700.07 48.27 L 721.42 48.27 L 745.02 52.63 L 767.90 56.99 L 791.53 62.81 L 814.41 71.54 L 838.04 81.71 L 861.68 86.08 L 884.56 93.35 L 908.19 96.26 L 931.10 97.71 L 954.74 99.16 L 978.37 99.16 L 999.72 94.80 L 1023.33 90.44 L 1046.20 83.17 L 1069.84 78.81 L 1092.72 72.99 L 1116.35 70.08" class="highcharts-graph" data-z-index="1" stroke="#0ba828" stroke-width="2" stroke-dasharray="6,2" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-0 highcharts-line-series" data-z-index="3" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="Market Consensus Forecast, line 1 of 7 with 26 data points." style="outline: none;">
+      <path fill="#0ba828" d="M 534.50 73.59 L 538.50 73.59 L 538.50 75.30 L 534.50 75.30" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.49. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 557.50 38.69 L 561.50 38.69 L 561.50 40.40 L 557.50 40.40" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Aug 1, 05:00 AM, 4.73. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 581.50 22.69 L 585.50 22.69 L 585.50 24.41 L 581.50 24.41" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Sep 1, 05:00 AM, 4.84. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 604.50 27.06 L 608.50 27.06 L 608.50 28.77 L 604.50 28.77" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Oct 1, 05:00 AM, 4.81. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 627.50 35.78 L 631.50 35.78 L 631.50 37.49 L 627.50 37.49" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, Nov 1, 05:00 AM, 4.75. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 650.50 44.51 L 654.50 44.51 L 654.50 46.22 L 650.50 46.22" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Dec 1, 06:00 AM, 4.69. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 674.50 44.51 L 678.50 44.51 L 678.50 46.22 L 674.50 46.22" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jan 1, 06:00 AM, 4.69. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 698.50 47.41 L 702.50 47.41 L 702.50 49.13 L 698.50 49.13" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Feb 1, 06:00 AM, 4.67. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 719.50 47.41 L 723.50 47.41 L 723.50 49.13 L 719.50 49.13" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Mar 1, 06:00 AM, 4.67. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 743.50 51.78 L 747.50 51.78 L 747.50 53.49 L 743.50 53.49" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Apr 1, 05:00 AM, 4.64. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 765.50 56.14 L 769.50 56.14 L 769.50 57.85 L 765.50 57.85" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, May 1, 05:00 AM, 4.61. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 789.50 61.95 L 793.50 61.95 L 793.50 63.67 L 789.50 63.67" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Jun 1, 05:00 AM, 4.57. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 812.50 70.68 L 816.50 70.68 L 816.50 72.39 L 812.50 72.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jul 1, 05:00 AM, 4.51. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 836.50 80.86 L 840.50 80.86 L 840.50 82.57 L 836.50 82.57" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, Aug 1, 05:00 AM, 4.44. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 859.50 85.22 L 863.50 85.22 L 863.50 86.93 L 859.50 86.93" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Sep 1, 05:00 AM, 4.41. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 882.50 92.49 L 886.50 92.49 L 886.50 94.20 L 882.50 94.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Oct 1, 05:00 AM, 4.36. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 906.50 95.40 L 910.50 95.40 L 910.50 97.11 L 906.50 97.11" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Nov 1, 05:00 AM, 4.34. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 929.50 96.85 L 933.50 96.85 L 933.50 98.57 L 929.50 98.57" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Dec 1, 06:00 AM, 4.33. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 952.50 98.31 L 956.50 98.31 L 956.50 100.02 L 952.50 100.02" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Jan 1, 06:00 AM, 4.32. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 976.50 98.31 L 980.50 98.31 L 980.50 100.02 L 976.50 100.02" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Feb 1, 06:00 AM, 4.32. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 997.50 93.94 L 1001.50 93.94 L 1001.50 95.66 L 997.50 95.66" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Mar 1, 06:00 AM, 4.35. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 1021.50 89.58 L 1025.50 89.58 L 1025.50 91.30 L 1021.50 91.30" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Apr 1, 05:00 AM, 4.38. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 1044.50 82.31 L 1048.50 82.31 L 1048.50 84.03 L 1044.50 84.03" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, May 1, 05:00 AM, 4.43. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 1067.50 77.95 L 1071.50 77.95 L 1071.50 79.66 L 1067.50 79.66" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jun 1, 05:00 AM, 4.46. Market Consensus Forecast." style="outline: none;"></path>
+      <path fill="#0ba828" d="M 1090.50 72.13 L 1094.50 72.13 L 1094.50 73.85 L 1090.50 73.85" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Jul 1, 05:00 AM, 4.5. Market Consensus Forecast." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series highcharts-series-6 highcharts-line-series" data-z-index="3" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="url(#highcharts-bjrx48a-576-)" aria-hidden="true">
+      <path fill="none" d="M -21.28 160.23 L 2.35 120.97 L 25.99 90.44 L 48.87 29.37 L 72.50 72.99 L 95.41 142.79 L 119.05 136.97 L 142.68 115.16 L 164.80 115.16 L 188.40 67.17 L 211.28 75.90 L 234.91 100.62 L 257.79 109.34 L 281.43 164.60 L 305.06 186.41 L 327.94 131.15 L 351.58 93.35 L 374.48 88.98 L 398.12 54.09 L 421.76 80.26 L 443.11 104.98 L 466.71 104.98 L 489.59 84.62 L 513.22 90.44 L 536.10 87.53" class="highcharts-graph" data-z-index="1" stroke="#344D56" stroke-width="3" stroke-dasharray="none" filter="none"></path>
+    </g>
+    <g class="highcharts-markers highcharts-series-6 highcharts-line-series" data-z-index="3" opacity="2" transform="translate(76,53) scale(1 1)" clip-path="none" aria-hidden="false" role="region" tabindex="-1" aria-label="Historical Data, line 7 of 7 with 25 data points." style="outline: none;">
+      <path fill="#344D56" d="M 0.50 120.12 L 4.50 120.12 L 4.50 121.83 L 0.50 121.83" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Aug 1, 05:00 AM, 4.17. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 23.50 89.58 L 27.50 89.58 L 27.50 91.30 L 23.50 91.30" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Sep 1, 05:00 AM, 4.38. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 46.50 28.51 L 50.50 28.51 L 50.50 30.22 L 46.50 30.22" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Oct 1, 05:00 AM, 4.8. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 70.50 72.13 L 74.50 72.13 L 74.50 73.85 L 70.50 73.85" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Nov 1, 05:00 AM, 4.5. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 93.50 141.93 L 97.50 141.93 L 97.50 143.64 L 93.50 143.64" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Dec 1, 06:00 AM, 4.02. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 117.50 136.11 L 121.50 136.11 L 121.50 137.83 L 117.50 137.83" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Jan 1, 06:00 AM, 4.06. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 140.50 114.30 L 144.50 114.30 L 144.50 116.02 L 140.50 116.02" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Feb 1, 06:00 AM, 4.21. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 162.50 114.30 L 166.50 114.30 L 166.50 116.02 L 162.50 116.02" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Mar 1, 06:00 AM, 4.21. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 186.50 66.32 L 190.50 66.32 L 190.50 68.03 L 186.50 68.03" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Apr 1, 05:00 AM, 4.54. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 209.50 75.04 L 213.50 75.04 L 213.50 76.76 L 209.50 76.76" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, May 1, 05:00 AM, 4.48. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 232.50 99.76 L 236.50 99.76 L 236.50 101.47 L 232.50 101.47" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, Jun 1, 05:00 AM, 4.31. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 255.50 108.48 L 259.50 108.48 L 259.50 110.20 L 255.50 110.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Monday, Jul 1, 05:00 AM, 4.25. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 279.50 163.74 L 283.50 163.74 L 283.50 165.45 L 279.50 165.45" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, Aug 1, 05:00 AM, 3.87. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 303.50 185.55 L 307.50 185.55 L 307.50 187.27 L 303.50 187.27" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Sep 1, 05:00 AM, 3.72. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 325.50 130.30 L 329.50 130.30 L 329.50 132.01 L 325.50 132.01" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Oct 1, 05:00 AM, 4.1. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 349.50 92.49 L 353.50 92.49 L 353.50 94.20 L 349.50 94.20" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Friday, Nov 1, 05:00 AM, 4.36. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 372.50 88.13 L 376.50 88.13 L 376.50 89.84 L 372.50 89.84" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Dec 1, 06:00 AM, 4.39. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 396.50 53.23 L 400.50 53.23 L 400.50 54.94 L 396.50 54.94" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Wednesday, Jan 1, 06:00 AM, 4.63. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 419.50 79.40 L 423.50 79.40 L 423.50 81.12 L 419.50 81.12" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, Feb 1, 06:00 AM, 4.45. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 441.50 104.12 L 445.50 104.12 L 445.50 105.84 L 441.50 105.84" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Saturday, Mar 1, 06:00 AM, 4.28. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 464.50 104.12 L 468.50 104.12 L 468.50 105.84 L 464.50 105.84" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Apr 1, 05:00 AM, 4.28. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 487.50 83.77 L 491.50 83.77 L 491.50 85.48 L 487.50 85.48" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Thursday, May 1, 05:00 AM, 4.42. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 511.50 89.58 L 515.50 89.58 L 515.50 91.30 L 511.50 91.30" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Sunday, Jun 1, 05:00 AM, 4.38. Historical Data." style="outline: none;"></path>
+      <path fill="#344D56" d="M 534.50 86.67 L 538.50 86.67 L 538.50 88.39 L 534.50 88.39" stroke="#ffffff" stroke-width="0" opacity="1" class="highcharts-point" tabindex="-1" role="img" aria-label="Tuesday, Jul 1, 05:00 AM, 4.4. Historical Data." style="outline: none;"></path>
+    </g>
+    <g class="highcharts-series custom-dns-series">
+      <path d="M 658.45 98.48 L 681.33 105.02 L 704.96 111.34 L 727.84 117.44 L 751.48 123.34 L 775.11 129.06 L 796.46 134.61 L 820.10 140.00 L 842.97 145.24 L 866.61 150.34 L 889.49 155.31 L 913.12 160.15 L 936.76 164.87 L 959.64 169.47 L 983.27 173.96 L 1006.15 178.34 L 1029.78 182.62 L 1053.42 186.79 L 1074.77 190.86 L 1098.41 194.84 L 1121.28 198.72 L 1144.92 202.50 L 1167.80 206.20 L 1191.43 209.80" stroke="purple" stroke-width="3" fill="none" stroke-dasharray="8,4" />
+    </g>
+    <g class="highcharts-series custom-cpidns-series">
+      <path d="M 658.45 98.48 L 681.33 96.35 L 704.96 93.74 L 727.84 90.64 L 751.48 87.08 L 775.11 83.09 L 796.46 78.65 L 820.10 73.80 L 842.97 79.04 L 866.61 84.14 L 889.49 89.11 L 913.12 93.95 L 936.76 98.67 L 959.64 103.27 L 983.27 107.76 L 1006.15 112.14 L 1029.78 116.42 L 1053.42 120.59 L 1074.77 124.67 L 1098.41 128.64 L 1121.28 132.52 L 1144.92 136.31 L 1167.80 140.00 L 1191.43 143.60" stroke="orange" stroke-width="3" fill="none" />
+    </g>
+    <g class="highcharts-series custom-dcm-series">
+      <path d="M 659.98 186.91 L 681.33 210.83 L 704.96 217.14 L 726.31 223.24 L 751.48 246.51 L 774.35 252.23 L 795.70 257.78 L 820.10 280.55 L 842.97 285.79 L 865.09 290.89 L 889.49 295.86 L 913.12 318.07 L 936.76 322.79 L 959.64 327.39 L 982.51 331.88 L 1006.15 336.26 L 1029.78 340.54 L 1051.90 344.71 L 1073.25 348.78 L 1098.41 352.76 L 1121.28 356.64 L 1144.92 360.43 L 1167.80 364.12 L 1190.67 367.73" stroke="green" stroke-width="3" fill="none" />
+    </g>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-0 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(662.00,69.57)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#0ba828" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(11, 168, 40);">Market Consensus Forecast 07/28</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-1 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(1041.00,213.14)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#AA4643" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(170, 70, 67);">U.S. CBO Model 01/17</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-2 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(734.00,133.43)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#4572A7" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(69, 114, 167);">Fannie Mae Forecast 07/24</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-4 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(601.00,145.00)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#3D96AE" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(61, 150, 174);">Wells Fargo Economic Outlook 06/11</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-5 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(810.00,188.29)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#DB843D" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(219, 132, 61);">WSJ Economic Survey 04/12</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label highcharts-series-label-6 highcharts-color-none" opacity="1" data-z-index="3" transform="translate(522.00,159.14)" aria-hidden="true">
+    <path fill="none" class="highcharts-label-box" d="M 0 0" stroke="#344D56" stroke-width="1"></path>
+    <text x="0" data-z-index="1" y="12" style="font-size: 0.8em; font-weight: bold; fill: rgb(52, 77, 86);">Historical Data</text>
+  </g>
+  <text x="600" text-anchor="middle" class="highcharts-title" data-z-index="4" style="font-size: 1.1rem; font-weight: normal; fill: rgb(15, 23, 42);" text-align="center" y="27" transform-origin="112.2562484741211 19" transform="translate(0,0) scale(1 1)" aria-hidden="true">10 Year Treasury Note Yield</text>
+  <text x="10" text-anchor="start" class="highcharts-subtitle" data-z-index="4" style="font-size: 0.8em; fill: rgb(51, 65, 85);" text-align="left" y="47" transform-origin="10 15" transform="translate(0,0) scale(1 1)" aria-hidden="true"></text>
+  <text x="1190" text-anchor="end" class="highcharts-caption" data-z-index="4" style="font-size: 0.75rem; fill: rgb(102, 102, 102);" text-align="right" y="583" transform-origin="147.7764892578125 14" transform="translate(0,0) scale(1 1)" aria-hidden="true">https://econforecasting.com and FTS DNS Model</text>
+  <g class="highcharts-datalabels-group" data-z-index="6" aria-hidden="true"></g>
+  <g class="highcharts-axis-labels highcharts-xaxis-labels" data-z-index="7" aria-hidden="true">
+    <text x="101.83241586813" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">09/2023</text>
+    <text x="194.85637206251" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">01/2024</text>
+    <text x="287.11783681269" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">05/2024</text>
+    <text x="380.90428445129" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">09/2024</text>
+    <text x="473.92824064568" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">01/2025</text>
+    <text x="565.42721395163" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">05/2025</text>
+    <text x="659.21366159024" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">09/2025</text>
+    <text x="752.23761778462" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">01/2026</text>
+    <text x="843.73659109058" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">05/2026</text>
+    <text x="937.52303872918" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">09/2026</text>
+    <text x="1030.5469949236" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">01/2027</text>
+    <text x="1122.0459682295" text-anchor="middle" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="555" opacity="1">05/2027</text>
+  </g>
+  <g class="highcharts-axis-labels highcharts-yaxis-labels" data-z-index="7" aria-hidden="true">
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="256.00" opacity="1">3.6%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="226.86" opacity="1">3.8%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="197.71" opacity="1">4.0%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="168.57" opacity="1">4.2%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="139.86" opacity="1">4.4%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="110.71" opacity="1">4.6%</text>
+    <text x="61" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" y="81.57" opacity="1">4.8%</text>
+    <text x="0" text-anchor="end" transform="translate(0,0)" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" visibility="hidden">5.0%</text>
+    <text x="61" y="291.00" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">3.4%</text>
+    <text x="61" y="324.93" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">3.2%</text>
+    <text x="61" y="358.86" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">3.0%</text>
+    <text x="61" y="392.79" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">2.8%</text>
+    <text x="61" y="426.71" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">2.6%</text>
+    <text x="61" y="460.64" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">2.4%</text>
+    <text x="61" y="494.57" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">2.2%</text>
+    <text x="61" y="528.50" style="cursor: default; font-size: 0.8em; fill: rgb(51, 65, 85);" text-anchor="end">2.0%</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label" transform="translate(1141.43,222.94)">
+    <text x="0" y="12" style="color:purple;font-size:0.8em;font-weight:bold;fill:purple;">DNS Model</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label" transform="translate(1141.43,156.75)">
+    <text x="0" y="12" style="color:orange;font-size:0.8em;font-weight:bold;fill:orange;">DNS-CPI</text>
+  </g>
+  <g class="highcharts-label highcharts-series-label" transform="translate(669.98,210.77)">
+    <text x="0" y="12" style="color:green;font-size:0.8em;font-weight:bold;fill:green;">DCM Model</text>
+  </g>
+</svg>
