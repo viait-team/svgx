@@ -1,329 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIAIT SVG Viewer</title>
+    <title>VIAIT SVGX Viewer</title>
     <style>
         body {
             font-family: sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f0f0f0;
-            height: 100vh; /* Full viewport height */
-            overflow: hidden; /* Prevent body scroll, SVG container will scroll */
-        }
-        .controls {
-            padding: 15px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 100; /* Ensure controls are above fullscreen SVG */
-        }
-        /* Styling for the custom file input button */
-        .file-input-wrapper {
-            position: relative;
+            height: 100vh;
             overflow: hidden;
-            display: inline-block;
-            background-color: #007bff; /* Blue */
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            border: none;
-            text-align: center;
-            line-height: normal; /* For consistent button height */
+            background-color: #f0f0f0;
+            display: flex;
+            /* Make body a flex container */
+            flex-direction: column;
+            /* Stack children vertically */
         }
-        .file-input-wrapper input[type=file] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0; /* Hide the default file input button */
-            cursor: pointer;
+
+        main {
+            flex-grow: 1;
             width: 100%;
-            height: 100%;
-        }
-        .action-button {
-            background-color: #28a745; /* Green */
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            border: none;
-            line-height: normal;
-        }
-        .action-button:hover, .file-input-wrapper:hover {
-            opacity: 0.9;
+            display: flex;
+            position: relative;
         }
 
         #svg-container {
-            flex-grow: 1; /* Takes all available vertical space */
-            width: 100%;
+            flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Hide scrollbars, SVG should fit */
-            background-color: #fff;
-            position: relative; /* Base for fullscreen positioning */
-            transition: all 0.3s ease; /* Smooth transition for fullscreen toggle */
-            box-sizing: border-box; /* Include padding/border in element's total width/height */
-            padding: 10px; /* Some padding around the SVG */
-        }
-        #svg-container svg {
-            /* We are no longer forcing 100% width/height here.
-               The SVG's intrinsic width/height attributes will be honored,
-               and max-width/height will scale it down if needed. */
-            max-width: 100%;
-            max-height: 100%;
-            display: block; 
-            /* Transition for smooth SVG attribute transform */
-            transition: transform 0.3s ease; 
-            object-fit: contain; /* Ensure SVG is scaled to fit within its bounds if its aspect ratio differs from container */
-        }
-        #svg-container p {
-            color: #888;
-            font-style: italic;
-            text-align: center;
+            overflow: hidden;
+            background-color: #e9e9e9;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
-        /* Fullscreen mode for SVG container */
-        #svg-container.fullscreen {
-            position: fixed; /* Fixed position relative to viewport */
-            top: 0;
-            left: 0;
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
-            background-color: rgba(0,0,0,0.95); /* Darker, slightly transparent background */
-            z-index: 999; /* Ensure it's on top of everything else */
-            padding: 0;
-            margin: 0;
-            overflow: hidden; /* Hide scrollbars in fullscreen */
+        #svg-container svg,
+        #svg-container img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out;
+            /* Smooth rotation transition */
         }
-        #svg-container.fullscreen svg {
-            /* In fullscreen, SVG also needs to scale to the viewport dimensions correctly when rotated */
-            max-width: 100vw;
-            max-height: 100vh;
-            width: auto; /* Allow intrinsic width/height to be respected, scaled by max-width/height */
-            height: auto; /* Allow intrinsic width/height to be respected, scaled by max-width/height */
-            margin: auto;
-            object-fit: contain; /* Essential for correct scaling with rotation */
+
+        #floating-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(40, 40, 40, 0.85);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            gap: 8px;
+            cursor: move;
+            z-index: 1000;
+            touch-action: none;
+        }
+
+        .icon-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: background-color 0.2s;
+        }
+
+        .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #hiddenFileInput {
+            display: none;
         }
     </style>
 </head>
-<body>
-    <div class="controls">
-        <label class="file-input-wrapper">
-            Open SVG File
-            <input type="file" id="svgFileInput" accept=".svg">
-        </label>
-        <button id="toggleViewButton" class="action-button" style="display: none;">Toggle Full View</button>
-    </div>
 
-    <div id="svg-container">
-        <img src="chart_after_x.svg" alt="Please open an SVG file to view it here."> </img>
-    </div>
+<body>
+
+    <input type="file" id="hiddenFileInput" accept=".svg">
+
+    <main>
+        <div id="svg-container">
+            <img src="chart_after_x.svg" alt="Please open an SVG file to view it here.">
+        </div>
+
+        <div id="floating-panel">
+            <button class="icon-button" id="openFileButton" title="Open SVG File">📂</button>
+            <hr style="border-color: rgba(255,255,255,0.2); width: 100%; margin: 2px 0;">
+            <button class="icon-button" id="zoomXButton" title="Logical Zoom X-Axis">↔</button>
+            <button class="icon-button" id="zoomYButton" title="Logical Zoom Y-Axis">↕</button>
+            <button class="icon-button" id="resetButton" title="Reset View">⟲</button>
+        </div>
+    </main>
 
     <script>
-        const svgFileInput = document.getElementById('svgFileInput');
+        const hiddenFileInput = document.getElementById('hiddenFileInput');
+        const openFileButton = document.getElementById('openFileButton');
         const svgContainer = document.getElementById('svg-container');
-        const toggleViewButton = document.getElementById('toggleViewButton');
-        const messageElement = document.getElementById('message');
+        const floatingPanel = document.getElementById('floating-panel');
+        const mainWrapper = document.querySelector('main');
 
-        let svgLoaded = false; // To track if an SVG is currently displayed
-
-        // Function to apply rotation by manipulating the SVG DOM's transform attribute
+        // --- CORE ROTATION LOGIC (RESTORED) ---
         function applyDeviceRotation() {
             const svgElement = svgContainer.querySelector('svg');
-            if (svgElement && svgLoaded) {
-                // Determine rotation degree based on device orientation
+            if (svgElement) {
                 let rotationDegree = 0;
                 if (screen.orientation && screen.orientation.angle !== undefined) {
                     rotationDegree = screen.orientation.angle;
-                } else if (window.orientation !== undefined) {
-                    // Fallback for older browsers: window.orientation gives 0, 90, -90, 180
-                    if (window.orientation === 90) rotationDegree = 90;
-                    else if (window.orientation === -90) rotationDegree = 270; 
-                    else if (window.orientation === 180) rotationDegree = 180;
+                } else if (window.orientation !== undefined) { // Fallback
+                    rotationDegree = window.orientation; // Handles 90, -90, etc.
                 }
-                
-                // Get viewBox dimensions to calculate the rotation origin (center of the SVG content)
-                // If viewBox is not present, or if width/height are used without viewBox, this gets tricky.
-                // We'll try to use viewBox first, then fallback to getBBox() if available.
-                let cx = 0, cy = 0; 
-                let hasViewBox = false;
 
+                // Rotation should always happen around the center of the viewBox for best results
+                let cx = 0, cy = 0;
                 const viewBoxAttr = svgElement.getAttribute('viewBox');
                 if (viewBoxAttr) {
                     const parts = viewBoxAttr.split(' ').map(Number);
                     if (parts.length === 4) {
-                        const vbMinX = parts[0];
-                        const vbMinY = parts[1];
-                        const vbWidth = parts[2];
-                        const vbHeight = parts[3];
-                        cx = vbMinX + (vbWidth / 2);
-                        cy = vbMinY + (vbHeight / 2);
-                        hasViewBox = true;
-                        console.log(`[VIAIT] ViewBox detected: ${viewBoxAttr}. Calculated center: (${cx}, ${cy})`);
-                    } else {
-                        console.warn('[VIAIT] Invalid viewBox format:', viewBoxAttr);
+                        cx = parts[0] + parts[2] / 2;
+                        cy = parts[1] + parts[3] / 2;
                     }
-                } 
-                
-                // Fallback if no viewBox or malformed, try to use getBBox() for content bounds
-                if (!hasViewBox && typeof svgElement.getBBox === 'function') {
-                    try {
-                        const bbox = svgElement.getBBox();
-                        cx = bbox.x + bbox.width / 2;
-                        cy = bbox.y + bbox.height / 2;
-                        console.log(`[VIAIT] No valid viewBox, using getBBox() for center: (${cx}, ${cy})`);
-                    } catch (e) {
-                        console.error('[VIAIT] getBBox() failed, defaulting origin to 0,0:', e);
-                        cx = 0; cy = 0; // Default if getBBox fails
-                    }
-                } else if (!hasViewBox) {
-                    console.warn('[VIAIT] SVG has no viewBox and getBBox() is not available. Rotation origin defaulting to 0,0. SVG content might not rotate around its visual center.');
                 }
- 
-                cx = 0; // Default center X
-                cy = 0; // Default center Y           
-                // SVG transform syntax for rotation around a point: rotate(angle cx cy)
+
                 const svgTransform = `rotate(${rotationDegree} ${cx} ${cy})`;
-                
-                // Apply the transform attribute directly to the root SVG element
                 svgElement.setAttribute('transform', svgTransform);
-                console.log(`[VIAIT] Injected SVG transform attribute: "${svgTransform}". Detected angle: ${rotationDegree}deg.`); 
-            } else {
-                console.log('[VIAIT] SVG not loaded or element not found for SVG DOM transformation. Skipping.');
+                console.log(`[VIAIT] Applied rotation: ${svgTransform}`);
             }
         }
 
-        svgFileInput.addEventListener('change', function(event) {
+        // --- Event Listeners ---
+
+        openFileButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hiddenFileInput.click();
+        });
+
+        hiddenFileInput.addEventListener('change', function (event) {
             const file = event.target.files[0];
-            if (!file) {
-                messageElement.style.display = 'block';
-                messageElement.textContent = 'Please select an SVG file.';
-                svgContainer.innerHTML = '';
-                toggleViewButton.style.display = 'none';
-                svgLoaded = false;
-                console.log('[VIAIT] No file selected.'); 
-                return;
-            }
+            if (!file) return;
 
             if (file.type !== 'image/svg+xml') {
-                messageElement.style.display = 'block';
-                messageElement.textContent = 'Invalid file type. Please select a valid SVG file (.svg).';
-                svgContainer.innerHTML = ''; 
-                toggleViewButton.style.display = 'none';
-                svgLoaded = false;
-                console.log('[VIAIT] Invalid file type:', file.type); 
+                svgContainer.innerHTML = '<p style="color:#888;">Invalid file type. Please select a .svg file.</p>';
                 return;
             }
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const svgString = e.target.result;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(svgString, 'image/svg+xml');
-                const svgElement = doc.documentElement; // This is the root <svg> element
+                const svgElement = doc.documentElement;
 
                 if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
-                    messageElement.style.display = 'block';
-                    messageElement.textContent = 'Invalid SVG content after parsing.';
-                    svgContainer.innerHTML = '';
-                    toggleViewButton.style.display = 'none';
-                    svgLoaded = false;
-                    console.error('[VIAIT] Parsed content is not a valid SVG element.');
+                    svgContainer.innerHTML = '<p style="color:#888;">Invalid SVG content.</p>';
                     return;
                 }
 
-                // Append the parsed SVG DOM element directly
-                svgContainer.innerHTML = ''; 
+                svgContainer.innerHTML = '';
                 svgContainer.appendChild(svgElement);
 
-                messageElement.style.display = 'none';
-                toggleViewButton.style.display = 'inline-block';
-                svgLoaded = true;
-                
-                // Apply initial rotation after a small delay to ensure DOM is ready
-                setTimeout(() => {
-                    applyDeviceRotation(); 
-                    console.log('[VIAIT] SVG loaded and initial DOM rotation applied after delay.'); 
-                }, 100); 
-            };
-            reader.onerror = function() {
-                messageElement.style.display = 'block';
-                messageElement.textContent = 'Failed to read file. Please try again.';
-                svgContainer.innerHTML = '';
-                toggleViewButton.style.display = 'none';
-                svgLoaded = false;
-                console.error('[VIAIT] Failed to read file:', reader.error); 
+                // Apply rotation immediately after loading new SVG
+                applyDeviceRotation();
             };
             reader.readAsText(file);
         });
 
-        toggleViewButton.addEventListener('click', function() {
-            svgContainer.classList.toggle('fullscreen');
-            if (svgContainer.classList.contains('fullscreen')) {
-                toggleViewButton.textContent = 'Exit Full View';
-            } else {
-                toggleViewButton.textContent = 'Toggle Full View';
-            }
-            // Reapply rotation with a slight delay after view toggle
-            setTimeout(applyDeviceRotation, 100); 
-            console.log('[VIAIT] Toggle Full View clicked. DOM rotation reapplied with delay.'); 
+        // --- Draggable Panel Logic ---
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        floatingPanel.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('icon-button')) return;
+            isDragging = true;
+            offsetX = e.clientX - floatingPanel.offsetLeft;
+            offsetY = e.clientY - floatingPanel.offsetTop;
+            floatingPanel.style.cursor = 'grabbing';
         });
 
-        // Listen for orientation changes using the standard Screen Orientation API if available
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let newX = e.clientX - offsetX;
+            let newY = e.clientY - offsetY;
+            const containerRect = mainWrapper.getBoundingClientRect();
+            newX = Math.max(0, Math.min(newX, containerRect.width - floatingPanel.offsetWidth));
+            newY = Math.max(0, Math.min(newY, containerRect.height - floatingPanel.offsetHeight));
+            floatingPanel.style.left = `${newX}px`;
+            floatingPanel.style.top = `${newY}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            floatingPanel.style.cursor = 'move';
+        });
+
+        // --- Placeholder Button Logic ---
+        function onToolButtonClick(e) {
+            e.stopPropagation();
+            const tool = e.currentTarget.id;
+            console.log(`[VIAIT] ${tool} clicked.`);
+            alert(`Placeholder for ${tool}`);
+        }
+
+        document.getElementById('zoomXButton').addEventListener('click', onToolButtonClick);
+        document.getElementById('zoomYButton').addEventListener('click', onToolButtonClick);
+        document.getElementById('resetButton').addEventListener('click', onToolButtonClick);
+
+        // --- ROTATION EVENT LISTENERS (RESTORED) ---
         if (screen.orientation) {
             screen.orientation.addEventListener('change', applyDeviceRotation);
-            console.log('[VIAIT] Listening to screen.orientation.change'); 
         } else {
-            // Fallback for older browsers or if screen.orientation is not supported
             window.addEventListener('orientationchange', applyDeviceRotation);
-            console.log('[VIAIT] Listening to window.orientationchange (fallback)'); 
         }
-        window.addEventListener('resize', applyDeviceRotation); // Also listen for resize
-        console.log('[VIAIT] Listening to resize event.'); 
+        window.addEventListener('resize', applyDeviceRotation);
 
-        // Initial application of rotation when the page loads, with a slight delay
-        window.addEventListener('load', () => {
-            setTimeout(applyDeviceRotation, 100);
-            console.log('[VIAIT] Page loaded, attempting initial DOM rotation after delay.');
-        });
+        // Apply rotation on initial load for the placeholder if it's an SVG
+        window.addEventListener('load', applyDeviceRotation);
 
-
-        // Optional: Add drag-and-drop functionality for desktop convenience
-        document.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'copy';
-        });
-
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.dataTransfer.items) {
-                for (let i = 0; i < e.dataTransfer.items.length; i++) {
-                    if (e.dataTransfer.items[i].kind === 'file' && e.dataTransfer.items[i].type === 'image/svg+xml') {
-                        const file = e.dataTransfer.items[i].getAsFile();
-                        if (file) {
-                            svgFileInput.files = e.dataTransfer.files;
-                            svgFileInput.dispatchEvent(new Event('change', { bubbles: true }));
-                            console.log('[VIAIT] File dropped and processed.'); 
-                            break;
-                        }
-                    }
-                }
-            }
-        });
     </script>
 </body>
+
 </html>
