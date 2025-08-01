@@ -14,9 +14,7 @@
             overflow: hidden;
             background-color: #f0f0f0;
             display: flex;
-            /* Make body a flex container */
             flex-direction: column;
-            /* Stack children vertically */
         }
 
         main {
@@ -44,7 +42,6 @@
             display: block;
             object-fit: contain;
             transition: transform 0.3s ease-in-out;
-            /* Smooth rotation transition */
         }
 
         #floating-panel {
@@ -102,8 +99,8 @@
         <div id="floating-panel">
             <button class="icon-button" id="openFileButton" title="Open SVG File">📂</button>
             <hr style="border-color: rgba(255,255,255,0.2); width: 100%; margin: 2px 0;">
-            <button class="icon-button" id="zoomXButton" title="Logical Zoom X-Axis">↔</button>
-            <button class="icon-button" id="zoomYButton" title="Logical Zoom Y-Axis">↕</button>
+            <button class="icon-button" id="zoomXButton" title="Asymmetrical Zoom X-Axis">↔</button>
+            <button class="icon-button" id="zoomYButton" title="Asymmetrical Zoom Y-Axis">↕</button>
             <button class="icon-button" id="resetButton" title="Reset View">⟲</button>
         </div>
     </main>
@@ -115,18 +112,25 @@
         const floatingPanel = document.getElementById('floating-panel');
         const mainWrapper = document.querySelector('main');
 
-        // --- CORE ROTATION LOGIC (RESTORED) ---
-        function applyDeviceRotation() {
+        // --- STATE MANAGEMENT for ZOOM ---
+        let currentZoomX = 1;
+        let currentZoomY = 1;
+        const zoomLevels = [1, 2, 3]; // Cycle through 1x, 2x, 3x zoom
+
+        // --- UNIFIED TRANSFORM FUNCTION ---
+        // This is now the single source of truth for applying transforms.
+        // It combines rotation and the current zoom state.
+        function updateSvgTransform() {
             const svgElement = svgContainer.querySelector('svg');
             if (svgElement) {
+                // 1. Calculate Rotation
                 let rotationDegree = 0;
                 if (screen.orientation && screen.orientation.angle !== undefined) {
                     rotationDegree = screen.orientation.angle;
-                } else if (window.orientation !== undefined) { // Fallback
-                    rotationDegree = window.orientation; // Handles 90, -90, etc.
+                } else if (window.orientation !== undefined) {
+                    rotationDegree = window.orientation;
                 }
 
-                // Rotation should always happen around the center of the viewBox for best results
                 let cx = 0, cy = 0;
                 const viewBoxAttr = svgElement.getAttribute('viewBox');
                 if (viewBoxAttr) {
@@ -136,10 +140,15 @@
                         cy = parts[1] + parts[3] / 2;
                     }
                 }
+                const rotateStr = `rotate(${rotationDegree} ${cx} ${cy})`;
 
-                const svgTransform = `rotate(${rotationDegree} ${cx} ${cy})`;
-                svgElement.setAttribute('transform', svgTransform);
-                console.log(`[VIAIT] Applied rotation: ${svgTransform}`);
+                // 2. Get current zoom state
+                const scaleStr = `scale(${currentZoomX} ${currentZoomY})`;
+
+                // 3. Combine and Apply
+                const finalTransform = `${rotateStr} ${scaleStr}`;
+                svgElement.setAttribute('transform', finalTransform);
+                console.log(`[VIAIT] Applied transform: ${finalTransform}`);
             }
         }
 
@@ -174,8 +183,10 @@
                 svgContainer.innerHTML = '';
                 svgContainer.appendChild(svgElement);
 
-                // Apply rotation immediately after loading new SVG
-                applyDeviceRotation();
+                // Reset zoom state for new file and apply initial transform
+                currentZoomX = 1;
+                currentZoomY = 1;
+                updateSvgTransform();
             };
             reader.readAsText(file);
         });
@@ -183,7 +194,6 @@
         // --- Draggable Panel Logic ---
         let isDragging = false;
         let offsetX, offsetY;
-
         floatingPanel.addEventListener('mousedown', (e) => {
             if (e.target.classList.contains('icon-button')) return;
             isDragging = true;
@@ -191,7 +201,6 @@
             offsetY = e.clientY - floatingPanel.offsetTop;
             floatingPanel.style.cursor = 'grabbing';
         });
-
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             let newX = e.clientX - offsetX;
@@ -202,34 +211,49 @@
             floatingPanel.style.left = `${newX}px`;
             floatingPanel.style.top = `${newY}px`;
         });
-
         document.addEventListener('mouseup', () => {
             isDragging = false;
             floatingPanel.style.cursor = 'move';
         });
 
-        // --- Placeholder Button Logic ---
-        function onToolButtonClick(e) {
+        // --- ZOOM BUTTON LOGIC (IMPLEMENTED) ---
+        document.getElementById('zoomYButton').addEventListener('click', (e) => {
             e.stopPropagation();
-            const tool = e.currentTarget.id;
-            console.log(`[VIAIT] ${tool} clicked.`);
-            alert(`Placeholder for ${tool}`);
-        }
+            const currentIndex = zoomLevels.indexOf(currentZoomY);
+            const nextIndex = (currentIndex + 1) % zoomLevels.length;
+            currentZoomY = zoomLevels[nextIndex];
+            console.log(`[VIAIT] Vertical zoom set to: ${currentZoomY}x`);
+            updateSvgTransform();
+        });
 
-        document.getElementById('zoomXButton').addEventListener('click', onToolButtonClick);
-        document.getElementById('zoomYButton').addEventListener('click', onToolButtonClick);
-        document.getElementById('resetButton').addEventListener('click', onToolButtonClick);
+        document.getElementById('zoomXButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = zoomLevels.indexOf(currentZoomX);
+            const nextIndex = (currentIndex + 1) % zoomLevels.length;
+            currentZoomX = zoomLevels[nextIndex];
+            console.log(`[VIAIT] Horizontal zoom set to: ${currentZoomX}x`);
+            updateSvgTransform();
+        });
 
-        // --- ROTATION EVENT LISTENERS (RESTORED) ---
+        document.getElementById('resetButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentZoomX = 1;
+            currentZoomY = 1;
+            console.log('[VIAIT] Resetting zoom to 1x');
+            updateSvgTransform();
+        });
+
+        // --- ROTATION EVENT LISTENERS ---
+        // Now call the unified transform function
         if (screen.orientation) {
-            screen.orientation.addEventListener('change', applyDeviceRotation);
+            screen.orientation.addEventListener('change', updateSvgTransform);
         } else {
-            window.addEventListener('orientationchange', applyDeviceRotation);
+            window.addEventListener('orientationchange', updateSvgTransform);
         }
-        window.addEventListener('resize', applyDeviceRotation);
+        window.addEventListener('resize', updateSvgTransform);
 
-        // Apply rotation on initial load for the placeholder if it's an SVG
-        window.addEventListener('load', applyDeviceRotation);
+        // Apply initial transform on load
+        window.addEventListener('load', updateSvgTransform);
 
     </script>
 </body>
