@@ -445,43 +445,47 @@
             document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
         }
 
-    function loadDefaultSvg(url) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-                    return response.text();
-                })
-                .then(svgText => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(svgText, 'image/svg+xml');
-                    const svgElement = doc.documentElement;
 
-                    if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
-                        console.warn('[VIAIT] Invalid SVG content.');
-                        return;
-                    }
+        function loadDefaultSvg(url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                        return response.text();
+                    })
+                    .then(svgText => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(svgText, 'image/svg+xml');
+                        const svgElement = doc.documentElement;
 
-                    const fallbackImg = svgContainer.querySelector('img');
-                    if (fallbackImg) {
-                        svgContainer.removeChild(fallbackImg);
-                    }
+                        if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
+                            console.warn('[VIAIT] Invalid SVG content.');
+                            return;
+                        }
 
-                    svgContainer.appendChild(svgElement);
-                    currentZoomX = 1;
-                    currentZoomY = 1;
+                        // Replace the <img> with inline SVG
+                        const fallbackImg = svgContainer.querySelector('img');
+                        if (fallbackImg) {
+                            svgContainer.removeChild(fallbackImg);
+                        }
+
+                        svgContainer.appendChild(svgElement);
+                        currentZoomX = 1;
+                        currentZoomY = 1;
+                        updateSvgTransform();
+                        console.log('[VIAIT] Loaded and injected SVG:', url);
+                    })
+                    .catch(error => {
+                        console.error('[VIAIT] Failed to load SVG:', error);
+                    });
+            }
+
+            // Only load dynamically if hosted (not file://)
+            if (location.protocol !== 'file:') {
+                window.addEventListener('load', () => {
                     updateSvgTransform();
-                    console.log('[VIAIT] Loaded and injected SVG:', url);
-
-                    // 🔴 Inject live dot if mappings exist
-                    if (svgElement.hasAttribute('xlm') && svgElement.hasAttribute('ylm')) {
-                        updateDot(svgElement);
-                        setInterval(() => updateDot(svgElement), 60000);
-                    }
-                })
-                .catch(error => {
-                    console.error('[VIAIT] Failed to load SVG:', error);
+                    loadDefaultSvg('chart_after_x.svg');
                 });
-        }
+            }
 
     </script>
 </body>
