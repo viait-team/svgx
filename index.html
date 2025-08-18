@@ -399,6 +399,7 @@
         let color_index = 0;
 
         async function updateDot(svgElement) {
+            console.log('[VIAIT] updateDot invoked');
             const { yieldValue, dayChangeValue, dayChangeText, timeText } = await fetchYield();
             const timestampTicks = Date.now() * 1e4 + 621355968000000000;
             const coords = getLogicalCoordinates(svgElement, yieldValue, timestampTicks);
