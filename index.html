@@ -445,48 +445,77 @@
             document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
         }
 
-
         function loadDefaultSvg(url) {
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-                        return response.text();
-                    })
-                    .then(svgText => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(svgText, 'image/svg+xml');
-                        const svgElement = doc.documentElement;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return response.text();
+                })
+                .then(svgText => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(svgText, 'image/svg+xml');
+                    const svgElement = doc.documentElement;
 
-                        if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
-                            console.warn('[VIAIT] Invalid SVG content.');
-                            return;
-                        }
+                    if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
+                        console.warn('[VIAIT] Invalid SVG content.');
+                        return;
+                    }
 
-                        // Replace the <img> with inline SVG
-                        const fallbackImg = svgContainer.querySelector('img');
-                        if (fallbackImg) {
-                            svgContainer.removeChild(fallbackImg);
-                        }
+                    // Replace the <img> with inline SVG
+                    const fallbackImg = svgContainer.querySelector('img');
+                    if (fallbackImg) {
+                        svgContainer.removeChild(fallbackImg);
+                    }
 
-                        svgContainer.appendChild(svgElement);
-                        currentZoomX = 1;
-                        currentZoomY = 1;
-                        updateSvgTransform();
-                        console.log('[VIAIT] Loaded and injected SVG:', url);
-                    })
-                    .catch(error => {
-                        console.error('[VIAIT] Failed to load SVG:', error);
-                    });
-            }
-
-            // Only load dynamically if hosted (not file://)
-            if (location.protocol !== 'file:') {
-                window.addEventListener('load', () => {
+                    svgContainer.appendChild(svgElement);
+                    currentZoomX = 1;
+                    currentZoomY = 1;
                     updateSvgTransform();
-                    loadDefaultSvg('chart_after_x.svg');
+                    console.log('[VIAIT] Loaded and injected SVG:', url);
+
+                    createLiveDot(svgElement); // ← Minimal, scoped addition
+                })
+                .catch(error => {
+                    console.error('[VIAIT] Failed to load SVG:', error);
                 });
+        }
+
+        // Only load dynamically if hosted (not file://)
+        if (location.protocol !== 'file:') {
+            window.addEventListener('load', () => {
+                updateSvgTransform();
+                loadDefaultSvg('chart_after_x.svg');
+            });
+        }
+
+        function createLiveDot(svgElement) {
+            const xlm = parseFloat(svgElement.getAttribute('xlm'));
+            const ylm = parseFloat(svgElement.getAttribute('ylm'));
+
+            if (!isFinite(xlm) || !isFinite(ylm)) {
+                console.warn('[VIAIT] Missing or invalid xlm/ylm in SVG root.');
+                return;
             }
 
+            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('r', '4');
+            dot.setAttribute('fill', 'red');
+            svgElement.appendChild(dot);
+
+            function update() {
+                const t = Date.now() / 1000; // seconds
+                const x = xlm * t;
+                const y = ylm * Math.sin(t); // Replace with real data if needed
+
+                dot.setAttribute('cx', x.toFixed(2));
+                dot.setAttribute('cy', y.toFixed(2));
+
+                requestAnimationFrame(update);
+            }
+
+            update();
+        }
+    
     </script>
 </body>
 
