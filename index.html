@@ -445,46 +445,39 @@
             document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
         }
 
-        
-            function loadDefaultSvg(url) {
+        function loadDefaultSvg(url) {
+                console.log('[VIAIT] Entered loadDefaultSvg with URL:', url); // 🔍 Sentinel log
+
                 fetch(url)
                     .then(response => {
-                        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                        if (!response.ok) throw new Error(`Failed to fetch SVG: ${response.status}`);
                         return response.text();
                     })
                     .then(svgText => {
                         const parser = new DOMParser();
-                        const doc = parser.parseFromString(svgText, 'image/svg+xml');
-                        const svgElement = doc.documentElement;
+                        const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+                        const svgElement = svgDoc.documentElement;
 
-                        if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
-                            console.warn('[VIAIT] Invalid SVG content.');
-                            return;
-                        }
+                        // Inject SVG into container
+                        const container = document.getElementById('svg-container');
+                        container.innerHTML = ''; // Clear previous content
+                        container.appendChild(svgElement);
 
-                        // Replace the <img> with inline SVG
-                        const fallbackImg = svgContainer.querySelector('img');
-                        if (fallbackImg) {
-                            svgContainer.removeChild(fallbackImg);
-                        }
-
-                        svgContainer.appendChild(svgElement);
-                        currentZoomX = 1;
-                        currentZoomY = 1;
-                        updateSvgTransform();
                         console.log('[VIAIT] Loaded and injected SVG:', url);
+
+                        // Apply transform
+                        updateSvgTransform(svgElement);
+
+                        // Inject telemetry dot
+                        try {
+                            updateDot(svgElement);
+                        } catch (e) {
+                            console.error('[VIAIT] Dot update failed:', e);
+                        }
                     })
                     .catch(error => {
-                        console.error('[VIAIT] Failed to load SVG:', error);
+                        console.error('[VIAIT] SVG load error:', error);
                     });
-            }
-
-            // Only load dynamically if hosted (not file://)
-            if (location.protocol !== 'file:') {
-                window.addEventListener('load', () => {
-                    updateSvgTransform();
-                    loadDefaultSvg('chart_after_x.svg');
-                });
             }
     
     </script>
