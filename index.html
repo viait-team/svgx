@@ -84,6 +84,32 @@
         #hiddenFileInput {
             display: none;
         }
+
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode #svg-container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode #floating-panel {
+            background-color: rgba(20, 20, 20, 0.85);
+        }
+
+        body.dark-mode .icon-button {
+            color: #ddd;
+        }
+
+        body.dark-mode .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode svg {
+            filter: invert(1) hue-rotate(180deg);
+        }
     </style>
 </head>
 
@@ -101,6 +127,7 @@
             <hr style="border-color: rgba(255,255,255,0.2); width: 100%; margin: 2px 0;">
             <button class="icon-button" id="zoomXButton" title="Asymmetrical Zoom X-Axis">↔</button>
             <button class="icon-button" id="zoomYButton" title="Asymmetrical Zoom Y-Axis">↕</button>
+            <button class="icon-button" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
             <button class="icon-button" id="resetButton" title="Reset View">⟲</button>
         </div>
     </main>
@@ -257,6 +284,53 @@
         // Apply initial transform on load
         window.addEventListener('load', updateSvgTransform);
 
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            console.log(`[VIAIT] Dark mode ${document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'}`);
+        });
+
+        function loadDefaultSvg(url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                        return response.text();
+                    })
+                    .then(svgText => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(svgText, 'image/svg+xml');
+                        const svgElement = doc.documentElement;
+
+                        if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
+                            console.warn('[VIAIT] Invalid SVG content.');
+                            return;
+                        }
+
+                        // Replace the <img> with inline SVG
+                        const fallbackImg = svgContainer.querySelector('img');
+                        if (fallbackImg) {
+                            svgContainer.removeChild(fallbackImg);
+                        }
+
+                        svgContainer.appendChild(svgElement);
+                        currentZoomX = 1;
+                        currentZoomY = 1;
+                        updateSvgTransform();
+                        console.log('[VIAIT] Loaded and injected SVG:', url);
+                    })
+                    .catch(error => {
+                        console.error('[VIAIT] Failed to load SVG:', error);
+                    });
+            }
+
+            // Only load dynamically if hosted (not file://)
+            if (location.protocol !== 'file:') {
+                window.addEventListener('load', () => {
+                    updateSvgTransform();
+                    loadDefaultSvg('chart_after_x.svg');
+                });
+            }
     </script>
 </body>
 
