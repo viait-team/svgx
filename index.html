@@ -500,9 +500,10 @@
         // Only load dynamically if hosted (not file://)
         if (location.protocol !== 'file:') {
             window.addEventListener('load', () => {
+                setDarkModeBasedOnTime();
                 updateSvgTransform();
                 loadDefaultSvg('chart_after_x.svg');
-                setDarkModeBasedOnTime(); // Set dark mode on page load
+               
             });
         }
 
