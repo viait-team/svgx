@@ -49,11 +49,15 @@ async function updateDot(viewer) {
         dot.setAttribute('stroke-width', '1');
         viewer.svgElement.appendChild(dot);
     }
-    
+ 
     // Update the dot's visual properties based on the fetched data.
     dot.setAttribute('fill', data.color || 'red');
     dot.setAttribute('cx', data.cx);
     dot.setAttribute('cy', data.cy);
+
+    // remove
+    dot.querySelectorAll('animate').forEach(anim => dot.removeChild(anim));
+    dot.querySelectorAll('title').forEach(t => dot.removeChild(t));
 
     // Update the dot's tooltip.
     let tooltip = dot.querySelector('title');
