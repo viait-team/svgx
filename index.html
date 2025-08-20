@@ -168,7 +168,8 @@
                     }
                 }
                 cx = 0; // Default center X
-                cy = 0; // Default center Y          
+                cy = 0; // Default center Y  
+                rotationDegree = 0; // android already handle it
                 const rotateStr = `rotate(${rotationDegree} ${cx} ${cy})`;
 
                 // 2. Get current zoom state
@@ -490,8 +491,8 @@
         // Only load dynamically if hosted (not file://)
         if (location.protocol !== 'file:') {
             window.addEventListener('load', () => {
-                // updateSvgTransform();
-                // loadDefaultSvg('chart_after_x.svg');
+                updateSvgTransform();
+                loadDefaultSvg('chart_after_x.svg');
             });
         }
        
