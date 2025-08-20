@@ -197,10 +197,10 @@ class SVGXViewer {
             const values = JSON.parse(attr.replace(/E\+?(\d+)/g, 'e$1'));
             if (Array.isArray(values) && values.length === 4) {
                 return {
-                    domainMin: parseFloat(values),
-                    domainMax: parseFloat(values),
-                    rangeMin: parseFloat(values),
-                    rangeMax: parseFloat(values)
+                    domainMin: parseFloat(values[0]),
+                    domainMax: parseFloat(values[1]),
+                    rangeMin: parseFloat(values[2]),
+                    rangeMax: parseFloat(values[3])
                 };
             }
         } catch (e) {
