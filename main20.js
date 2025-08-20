@@ -119,7 +119,8 @@ async function fetchYieldData() {
         if (row) {
             const cells = row.querySelectorAll('td');
             const bond = cells[0].innerText.trim();
-            const yieldValue = parseFloat(cells[1].innerText.trim());
+            const yieldRaw = cells[1].innerText.trim()
+            const yieldValue = parseFloat(yieldRaw);
             const dayChangeText = cells[3].innerText;
             const dayChangeValue = parseFloat(cells[3].innerText.replace('%', '').trim());
             const monthChange = parseFloat(cells[4].innerText.replace('%', '').trim());
@@ -132,7 +133,7 @@ async function fetchYieldData() {
                         second: '2-digit'
                     });
 
-                    return {
+            return {
                 yieldValue: isNaN(yieldValue) ? 0.0 : yieldValue,
                 dayChangeValue: parseFloat(dayChangeText.replace('%', '')),
                 tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}\nTime: ${timeText}`
