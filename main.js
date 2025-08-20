@@ -62,6 +62,16 @@ async function updateDot(viewer) {
         dot.appendChild(tooltip);
     }
     tooltip.textContent = data.tooltip || '';
+
+    // Add radius animation
+    const radiusAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+    radiusAnim.setAttribute('attributeName', 'r');
+    radiusAnim.setAttribute('values', '5;7;5');
+    radiusAnim.setAttribute('dur', '0.6s');
+    radiusAnim.setAttribute('repeatCount', 'indefinite');
+    radiusAnim.setAttribute('fill', 'freeze');
+    dot.appendChild(radiusAnim);
+    radiusAnim.beginElement();
 }
 
 /**
