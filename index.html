@@ -169,7 +169,7 @@
                 }
                 cx = 0; // Default center X
                 cy = 0; // Default center Y  
-                rotationDegree = 0; // android already handle it
+                // rotationDegree = 0; // android already handle it
                 const rotateStr = `rotate(${rotationDegree} ${cx} ${cy})`;
 
                 // 2. Get current zoom state
@@ -275,11 +275,11 @@
 
         // --- ROTATION EVENT LISTENERS ---
         // Now call the unified transform function
-        if (screen.orientation) {
+        // if (screen.orientation) {
             screen.orientation.addEventListener('change', updateSvgTransform);
-        } else {
-            window.addEventListener('orientationchange', updateSvgTransform);
-        }
+        // } else {
+        //    window.addEventListener('orientationchange', updateSvgTransform);
+        // }
         window.addEventListener('resize', updateSvgTransform);
 
         // Apply initial transform on load
