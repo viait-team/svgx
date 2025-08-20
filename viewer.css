@@ -1,0 +1,115 @@
+/* --- Root Container and Layout --- */
+/* This is the main class applied to the host element (e.g., #viewer-root) */
+.svgx-viewer {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Takes the full height of its container */
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Establishes a positioning context for the floating panel */
+}
+
+.svgx-viewer main {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    /* The position:relative is now on the root .svgx-viewer element */
+}
+
+/* --- SVG Content Area --- */
+.svgx-viewer #svg-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #e9e9e9;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.svgx-viewer #svg-container svg,
+.svgx-viewer #svg-container img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* --- Floating UI Panel --- */
+.svgx-viewer #floating-panel {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    background-color: rgba(40, 40, 40, 0.85);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    /* For Safari support */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 8px;
+    cursor: move;
+    z-index: 1000;
+    touch-action: none;
+    /* Prevents scrolling on touch devices when dragging the panel */
+}
+
+.svgx-viewer .icon-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    /* Removes flash on mobile tap */
+}
+
+.svgx-viewer .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Dark Mode Styles --- */
+/* The .dark-mode class is now applied to the root container */
+.svgx-viewer.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.svgx-viewer.dark-mode #svg-container {
+    background-color: #1e1e1e;
+}
+
+.svgx-viewer.dark-mode #floating-panel {
+    background-color: rgba(20, 20, 20, 0.85);
+}
+
+.svgx-viewer.dark-mode .icon-button {
+    color: #ddd;
+}
+
+.svgx-viewer.dark-mode .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* This filter inverts the colors of the SVG content for a quick dark mode effect */
+.svgx-viewer.dark-mode svg {
+    filter: invert(1) hue-rotate(180deg);
+}
