@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (location.protocol !== 'file:') {
+        
+        viewer.setDarkModeBasedOnTime();
+
         viewer.loadSvgFromUrl('chart_after_x.svg').then(() => {
             // The application is now fully responsible for the dot.
             

@@ -95,6 +95,15 @@ class SVGXViewer {
         return { vx, vy };
     }
 
+    // --- TIME-BASED DARK MODE ---
+    setDarkModeBasedOnTime() {
+        const currentHour = new Date().getHours();
+        if (currentHour >= 8 && currentHour < 17) {
+            document.body.classList.add('dark-mode');
+            console.log('[VIAIT] Dark mode enabled based on local time.');
+        }
+    }
+
     // --- Internal Methods (Private) ---
     _cacheDOMElements() {
         this.svgContainer = this.hostElement.querySelector('#svg-container');
