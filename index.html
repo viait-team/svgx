@@ -490,7 +490,7 @@
         // Only load dynamically if hosted (not file://)
         if (location.protocol !== 'file:') {
             window.addEventListener('load', () => {
-                updateSvgTransform();
+                // updateSvgTransform();
                 loadDefaultSvg('chart_after_x.svg');
             });
         }
