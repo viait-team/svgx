@@ -1,44 +1,82 @@
-// main.js - FINAL VERSION
-// alert("main.js is loading!");
+// main.js
 
-// This is the single, most important change. We wait for the browser to confirm
-// that the entire HTML page is loaded and ready before we run ANY code.
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Create the viewer instance INSIDE the listener.
-    // We also pass the placeholder image URL here.
     const viewer = new SVGXViewer('#viewer-root', {
         placeholderImageUrl: 'chart_after_x.svg'
     });
 
-    // 2. Check the environment and load the default SVG if on a server.
     if (location.protocol !== 'file:') {
-        // We command the viewer to load the real SVG.
-        // The .then() ensures the dot is enabled only AFTER the SVG is loaded.
         viewer.loadSvgFromUrl('chart_after_x.svg').then(() => {
-            viewer.enableLiveDot(getFinancialDotData, 30000); // Update every 30 seconds
+            // The application is now fully responsible for the dot.
+            
+            // 1. Do the initial update immediately after the SVG loads.
+            updateDot(viewer);
+            
+            // 2. Start a timer to call updateDot periodically.
+            setInterval(() => updateDot(viewer), 30000); // Update every 30 seconds
         });
     }
 
 });
 
 
-// --- Application-Specific Logic (No Changes Here) ---
+// --- Application-Specific Logic ---
 
-// This function is the "brain" for the live dot. It's specific to this application.
-async function getFinancialDotData() {
-    // This function needs access to the `viewer` instance to use its helper methods.
-    // Since this script won't run until after the viewer is created, this is safe.
-    const viewer = document.querySelector('#viewer-root').svgxViewerInstance;
-    if (!viewer) return null;
+/**
+ * Creates and updates the live dot on the SVG chart.
+ * This is now part of the main application, not the viewer library.
+ * @param {SVGXViewer} viewer The viewer instance, used as a tool.
+ */
+async function updateDot(viewer) {
+    // We can't do anything if the viewer doesn't have an SVG loaded.
+    if (!viewer.svgElement) return;
 
+    // Get the data needed to draw the dot.
+    const data = await getFinancialDotData(viewer);
+    if (!data) return; // Exit if data fetching failed.
+
+    // Find or create the dot element directly inside the viewer's SVG.
+    let dot = viewer.svgElement.querySelector('circle[data-live-dot]');
+    if (!dot) {
+        dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('data-live-dot', 'true');
+        dot.setAttribute('r', '5');
+        dot.setAttribute('stroke', 'black');
+        dot.setAttribute('stroke-width', '1');
+        viewer.svgElement.appendChild(dot);
+    }
+    
+    // Update the dot's visual properties based on the fetched data.
+    dot.setAttribute('fill', data.color || 'red');
+    dot.setAttribute('cx', data.cx);
+    dot.setAttribute('cy', data.cy);
+
+    // Update the dot's tooltip.
+    let tooltip = dot.querySelector('title');
+    if (!tooltip) {
+        tooltip = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        dot.appendChild(tooltip);
+    }
+    tooltip.textContent = data.tooltip || '';
+}
+
+/**
+ * A bridge function that fetches financial data and uses the viewer's
+ * helper method to translate it into SVG coordinates.
+ * @param {SVGXViewer} viewer The viewer instance.
+ */
+async function getFinancialDotData(viewer) {
     const data = await fetchYieldData();
     if (!data) return null;
 
     const timestampTicks = Date.now() * 1e4 + 621355968000000000;
+    
+    // Use the viewer's public helper method to get coordinates.
     const coords = viewer.getLogicalCoordinates(timestampTicks, data.yieldValue);
     if (!coords) return null;
     
+    // Return the final "paint instructions" for the dot.
     return {
         cx: coords.vx,
         cy: coords.vy,
@@ -63,7 +101,6 @@ async function fetchYieldData() {
         const yieldRaw = tds[1].textContent.trim();
         const dayChangeText = tds[3].textContent.trim();
         const timeText = tds.length >= 6 ? tds[6].textContent.trim() : new Date().toLocaleTimeString();
-
         return {
             yieldValue: parseFloat(yieldRaw),
             dayChangeValue: parseFloat(dayChangeText.replace('%', '')),

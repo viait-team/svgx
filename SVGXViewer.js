@@ -1,4 +1,4 @@
-// SVGXViewer.js - FINAL VERSION
+// SVGXViewer.js
 
 class SVGXViewer {
     viewerHTML = `
@@ -20,20 +20,19 @@ class SVGXViewer {
         this.hostElement = document.querySelector(targetElementSelector);
         if (!this.hostElement) throw new Error(`Viewer Error: Target element "${targetElementSelector}" not found.`);
         
-        // This makes the instance accessible from the DOM element itself, which is a
-        // useful pattern for connecting separate parts of the application.
         this.hostElement.svgxViewerInstance = this;
-        
         this.options = options;
+
+        // State properties
         this.currentZoomX = 1;
         this.currentZoomY = 1;
         this.zoomLevels = [1, 2, 3];
         this.isDragging = false;
         this.panelOffsetX = 0;
         this.panelOffsetY = 0;
+        
+        // Public property for the application to access the loaded SVG
         this.svgElement = null;
-        this.dotUpdateCallback = null;
-        this.dotUpdateInterval = null;
 
         this._init();
     }
@@ -78,23 +77,9 @@ class SVGXViewer {
         }
         this.svgContainer.innerHTML = '';
         this.svgContainer.appendChild(svgElement);
-        this.svgElement = svgElement;
+        this.svgElement = svgElement; // Expose the element publicly
 
         this.resetZoom();
-        
-        if(this.dotUpdateCallback) {
-            this._updateDot();
-        }
-    }
-
-    enableLiveDot(dataCallback, intervalMs = 60000) {
-        this.dotUpdateCallback = dataCallback;
-        if (this.dotUpdateInterval) clearInterval(this.dotUpdateInterval);
-        
-        if (this.svgElement) {
-            this._updateDot();
-            this.dotUpdateInterval = setInterval(() => this._updateDot(), intervalMs);
-        }
     }
     
     getLogicalCoordinates(domainXValue, domainYValue) {
@@ -197,44 +182,16 @@ class SVGXViewer {
         this.floatingPanel.style.cursor = 'move';
     }
 
-    async _updateDot() {
-        if (!this.svgElement || !this.dotUpdateCallback) return;
-        try {
-            const data = await this.dotUpdateCallback();
-            if (!data || data.cx === undefined || data.cy === undefined) return;
-            let dot = this.svgElement.querySelector('circle[data-live-dot]');
-            if (!dot) {
-                dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                dot.setAttribute('data-live-dot', 'true');
-                dot.setAttribute('r', '5');
-                dot.setAttribute('stroke', 'black');
-                dot.setAttribute('stroke-width', '1');
-                this.svgElement.appendChild(dot);
-            }
-            dot.setAttribute('fill', data.color || 'red');
-            dot.setAttribute('cx', data.cx);
-            dot.setAttribute('cy', data.cy);
-            let tooltip = dot.querySelector('title');
-            if (!tooltip) {
-                tooltip = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-                dot.appendChild(tooltip);
-            }
-            tooltip.textContent = data.tooltip || '';
-        } catch (error) {
-            console.error("[VIAIT Viewer] Dot update callback failed:", error);
-        }
-    }
-
     _parseMapping(attr) {
         if (!attr) return null;
         try {
             const values = JSON.parse(attr.replace(/E\+?(\d+)/g, 'e$1'));
             if (Array.isArray(values) && values.length === 4) {
                 return {
-                    domainMin: parseFloat(values[0]),
-                    domainMax: parseFloat(values[1]),
-                    rangeMin: parseFloat(values[2]),
-                    rangeMax: parseFloat(values[3])
+                    domainMin: parseFloat(values),
+                    domainMax: parseFloat(values),
+                    rangeMin: parseFloat(values),
+                    rangeMax: parseFloat(values)
                 };
             }
         } catch (e) {
@@ -250,3 +207,4 @@ class SVGXViewer {
         return rangeMin + adjusted * (rangeMax - rangeMin);
     }
 }
+
