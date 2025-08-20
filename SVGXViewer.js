@@ -82,7 +82,7 @@ class SVGXViewer {
         this.resetZoom();
     }
     
-    getLogicalCoordinates(domainXValue, domainYValue) {
+    getLogicalCoordinates(domainXValue, domainYValue, inverted = true) {
         if (!this.svgElement) return null;
         const ylmAttr = this.svgElement.getAttribute('ylm');
         const xlmAttr = this.svgElement.getAttribute('xlm');
@@ -91,7 +91,7 @@ class SVGXViewer {
         if (!yMapping || !xMapping) return null;
         
         const vx = this._mapValue(domainXValue, xMapping);
-        const vy = this._mapValue(domainYValue, yMapping, true);
+        const vy = this._mapValue(domainYValue, yMapping, inverted);
         return { vx, vy };
     }
 

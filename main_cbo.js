@@ -93,7 +93,7 @@ async function getFinancialDotData(viewer) {
     // alert(yieldValue);
 
     // Use the viewer's public helper method to get coordinates.
-    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue);
+    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue, false);
     if (!coords) return null;
     
     // Return the final "paint instructions" for the dot.
