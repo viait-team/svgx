@@ -70,13 +70,16 @@ async function updateDot(viewer) {
  * @param {SVGXViewer} viewer The viewer instance.
  */
 async function getFinancialDotData(viewer) {
+
     const data = await fetchYieldData();
     if (!data) return null;
 
     const timestampTicks = Date.now() * 1e4 + 621355968000000000;
-    
+    const yieldValue = data.yieldValue;
+    alert(yieldValue);
+
     // Use the viewer's public helper method to get coordinates.
-    const coords = viewer.getLogicalCoordinates(timestampTicks, data.yieldValue);
+    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue);
     if (!coords) return null;
     
     // Return the final "paint instructions" for the dot.
