@@ -126,7 +126,7 @@
             <button class="icon-button" id="openFileButton" title="Open SVG File">📂</button>
             <hr style="border-color: rgba(255,255,255,0.2); width: 100%; margin: 2px 0;">
             <button class="icon-button" id="zoomXButton" title="Asymmetrical Zoom X-Axis">↔</button>
-            <button class="icon-button" id="zoomYButton" title="Asymmetrical Zoom Y-Axis">↕</button>    
+            <button class="icon-button" id="zoomYButton" title="Asymmetrical Zoom Y-Axis">↕</button>
             <button class="icon-button" id="resetButton" title="Reset View">⟲</button>
             <button class="icon-button" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
         </div>
@@ -292,6 +292,15 @@
             console.log(`[VIAIT] Dark mode ${document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'}`);
         });
 
+        // --- TIME-BASED DARK MODE ---
+        function setDarkModeBasedOnTime() {
+            const currentHour = new Date().getHours();
+            if (currentHour >= 8 && currentHour < 17) {
+                document.body.classList.add('dark-mode');
+                console.log('[VIAIT] Dark mode enabled based on local time.');
+            }
+        }
+
         // Dot Update
         async function fetchYield() {
             try {
@@ -446,8 +455,8 @@
             document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
         }
 
-        
-            
+
+
         function loadDefaultSvg(url) {
             fetch(url)
                 .then(response => {
@@ -493,9 +502,10 @@
             window.addEventListener('load', () => {
                 updateSvgTransform();
                 loadDefaultSvg('chart_after_x.svg');
+                setDarkModeBasedOnTime(); // Set dark mode on page load
             });
         }
-       
+
     </script>
 </body>
 
