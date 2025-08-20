@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDot(viewer);
             
             // 2. Start a timer to call updateDot periodically.
-            setInterval(() => updateDot(viewer), 30000); // Update every 30 seconds
+            setInterval(() => updateDot(viewer), 60000); // Update every 30 seconds
         });
     }
 

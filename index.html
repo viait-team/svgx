@@ -451,11 +451,7 @@
             radiusAnim.setAttribute('fill', 'freeze');
             dot.appendChild(radiusAnim);
             radiusAnim.beginElement();
-
-            document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
         }
-
-
 
         function loadDefaultSvg(url) {
             fetch(url)
