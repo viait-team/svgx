@@ -5,24 +5,498 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIAIT SVGX Viewer</title>
-    <link rel="stylesheet" href="viewer.css">
     <style>
-        body,
-        html {
+        body {
+            font-family: sans-serif;
             margin: 0;
             padding: 0;
             height: 100vh;
             overflow: hidden;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            position: relative;
+        }
+
+        #svg-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #e9e9e9;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #svg-container svg,
+        #svg-container img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #floating-panel {
+            position: absolute;
+            top: 20px;
+            left: 5px;
+            background-color: rgba(40, 40, 40, 0.85);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            gap: 8px;
+            cursor: move;
+            z-index: 1000;
+            touch-action: none;
+        }
+
+        .icon-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: background-color 0.2s;
+        }
+
+        .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #hiddenFileInput {
+            display: none;
+        }
+
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode #svg-container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode #floating-panel {
+            background-color: rgba(20, 20, 20, 0.85);
+        }
+
+        body.dark-mode .icon-button {
+            color: #ddd;
+        }
+
+        body.dark-mode .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode svg {
+            filter: invert(1) hue-rotate(180deg);
         }
     </style>
 </head>
 
 <body>
-    <div id="viewer-root"></div>
 
-    <!-- Load the implementation script, which in turn loads the viewer library -->
-    <script src="SVGXViewer.js"></script>
-    <script src="main.js"></script>
+    <input type="file" id="hiddenFileInput" accept=".svg">
+
+    <main>
+        <div id="svg-container">
+            <img src="chart_after_x.svg" alt="Please open an SVG file to view it here.">
+        </div>
+
+        <div id="floating-panel">
+            <button class="icon-button" id="openFileButton" title="Open SVG File">📂</button>
+            <hr style="border-color: rgba(255,255,255,0.2); width: 100%; margin: 2px 0;">
+            <button class="icon-button" id="zoomXButton" title="Asymmetrical Zoom X-Axis">↔</button>
+            <button class="icon-button" id="zoomYButton" title="Asymmetrical Zoom Y-Axis">↕</button>    
+            <button class="icon-button" id="resetButton" title="Reset View">⟲</button>
+            <button class="icon-button" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+        </div>
+    </main>
+
+    <script>
+        const hiddenFileInput = document.getElementById('hiddenFileInput');
+        const openFileButton = document.getElementById('openFileButton');
+        const svgContainer = document.getElementById('svg-container');
+        const floatingPanel = document.getElementById('floating-panel');
+        const mainWrapper = document.querySelector('main');
+
+        // --- STATE MANAGEMENT for ZOOM ---
+        let currentZoomX = 1;
+        let currentZoomY = 1;
+        const zoomLevels = [1, 2, 3]; // Cycle through 1x, 2x, 3x zoom
+
+        // --- UNIFIED TRANSFORM FUNCTION ---
+        // This is now the single source of truth for applying transforms.
+        // It combines rotation and the current zoom state.
+        function updateSvgTransform() {
+            const svgElement = svgContainer.querySelector('svg');
+            if (svgElement) {
+                // 1. Calculate Rotation
+                let rotationDegree = 0;
+                if (screen.orientation && screen.orientation.angle !== undefined) {
+                    rotationDegree = screen.orientation.angle;
+                } else if (window.orientation !== undefined) {
+                    rotationDegree = window.orientation;
+                }
+
+                let cx = 0, cy = 0;
+                const viewBoxAttr = svgElement.getAttribute('viewBox');
+                if (viewBoxAttr) {
+                    const parts = viewBoxAttr.split(' ').map(Number);
+                    if (parts.length === 4) {
+                        cx = parts[0] + parts[2] / 2;
+                        cy = parts[1] + parts[3] / 2;
+                    }
+                }
+                cx = 0; // Default center X
+                cy = 0; // Default center Y  
+                rotationDegree = 0; // android already handle it
+                const rotateStr = `rotate(${rotationDegree} ${cx} ${cy})`;
+
+                // 2. Get current zoom state
+                const scaleStr = `scale(${currentZoomX} ${currentZoomY})`;
+
+                // 3. Combine and Apply
+                const finalTransform = `${rotateStr} ${scaleStr}`;
+                svgElement.setAttribute('transform', finalTransform);
+                console.log(`[VIAIT] Applied transform: ${finalTransform}`);
+            }
+        }
+
+        // --- Event Listeners ---
+
+        openFileButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hiddenFileInput.click();
+        });
+
+        hiddenFileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type !== 'image/svg+xml') {
+                svgContainer.innerHTML = '<p style="color:#888;">Invalid file type. Please select a .svg file.</p>';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const svgString = e.target.result;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(svgString, 'image/svg+xml');
+                const svgElement = doc.documentElement;
+
+                if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
+                    svgContainer.innerHTML = '<p style="color:#888;">Invalid SVG content.</p>';
+                    return;
+                }
+
+                svgContainer.innerHTML = '';
+                svgContainer.appendChild(svgElement);
+
+                // Reset zoom state for new file and apply initial transform
+                currentZoomX = 1;
+                currentZoomY = 1;
+                updateSvgTransform();
+            };
+            reader.readAsText(file);
+        });
+
+        // --- Draggable Panel Logic ---
+        let isDragging = false;
+        let offsetX, offsetY;
+        floatingPanel.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('icon-button')) return;
+            isDragging = true;
+            offsetX = e.clientX - floatingPanel.offsetLeft;
+            offsetY = e.clientY - floatingPanel.offsetTop;
+            floatingPanel.style.cursor = 'grabbing';
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let newX = e.clientX - offsetX;
+            let newY = e.clientY - offsetY;
+            const containerRect = mainWrapper.getBoundingClientRect();
+            newX = Math.max(0, Math.min(newX, containerRect.width - floatingPanel.offsetWidth));
+            newY = Math.max(0, Math.min(newY, containerRect.height - floatingPanel.offsetHeight));
+            floatingPanel.style.left = `${newX}px`;
+            floatingPanel.style.top = `${newY}px`;
+        });
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            floatingPanel.style.cursor = 'move';
+        });
+
+        // --- ZOOM BUTTON LOGIC (IMPLEMENTED) ---
+        document.getElementById('zoomYButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = zoomLevels.indexOf(currentZoomY);
+            const nextIndex = (currentIndex + 1) % zoomLevels.length;
+            currentZoomY = zoomLevels[nextIndex];
+            console.log(`[VIAIT] Vertical zoom set to: ${currentZoomY}x`);
+            updateSvgTransform();
+        });
+
+        document.getElementById('zoomXButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = zoomLevels.indexOf(currentZoomX);
+            const nextIndex = (currentIndex + 1) % zoomLevels.length;
+            currentZoomX = zoomLevels[nextIndex];
+            console.log(`[VIAIT] Horizontal zoom set to: ${currentZoomX}x`);
+            updateSvgTransform();
+        });
+
+        document.getElementById('resetButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentZoomX = 1;
+            currentZoomY = 1;
+            console.log('[VIAIT] Resetting zoom to 1x');
+            updateSvgTransform();
+        });
+
+        // --- ROTATION EVENT LISTENERS ---
+        // Now call the unified transform function
+        if (screen.orientation) {
+            screen.orientation.addEventListener('change', updateSvgTransform);
+        } else {
+            window.addEventListener('orientationchange', updateSvgTransform);
+        }
+        window.addEventListener('resize', updateSvgTransform);
+
+        // Apply initial transform on load
+        window.addEventListener('load', updateSvgTransform);
+
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            console.log(`[VIAIT] Dark mode ${document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'}`);
+        });
+
+        // Dot Update
+        async function fetchYield() {
+            try {
+                const proxyUrl = 'https://corsproxy.io/?';
+                const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
+                const response = await fetch(proxyUrl + targetUrl);
+                const html = await response.text();
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
+                const tds = row?.querySelectorAll('td');
+
+                if (tds && tds.length >= 4) {
+                    const yieldRaw = tds[1].textContent.trim();
+                    const yieldValue = parseFloat(yieldRaw.replace(/[^0-9.\-]/g, ''));
+
+                    const pchCell = tds[3];
+                    const dayChangeText = pchCell.textContent.trim();
+                    const dayChangeValue = parseFloat(dayChangeText.replace('%', ''));
+
+                    var timeText = new Date().toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    if (tds.length >= 6) {
+                        timeText = tds[6].textContent.trim();
+                    }
+
+                    return {
+                        yieldValue: isNaN(yieldValue) ? 0.0 : yieldValue,
+                        dayChangeValue: isNaN(dayChangeValue) ? 0.0 : dayChangeValue,
+                        dayChangeText,
+                        timeText
+                    };
+                }
+            } catch (error) {
+                console.warn('Yield fetch failed:', error);
+            }
+            return {
+                yieldValue: 0.0,
+                dayChangeValue: 0.0,
+                dayChangeText: 'N/A',
+                timeText: 'N/A'
+            };
+        }
+
+        function parseMapping(attr) {
+            try {
+                const values = JSON.parse(attr.replace(/E\+?(\d+)/g, 'e$1'));
+                if (Array.isArray(values) && values.length === 4) {
+                    return {
+                        domainMin: parseFloat(values[0]),
+                        domainMax: parseFloat(values[1]),
+                        rangeMin: parseFloat(values[2]),
+                        rangeMax: parseFloat(values[3])
+                    };
+                }
+            } catch (e) {
+                console.warn('Invalid mapping:', attr);
+            }
+            return null;
+        }
+
+        function mapValue(value, mapping, invert = false) {
+            const { domainMin, domainMax, rangeMin, rangeMax } = mapping;
+            const ratio = (value - domainMin) / (domainMax - domainMin);
+            const adjusted = invert ? 1 - ratio : ratio;
+            return rangeMin + adjusted * (rangeMax - rangeMin);
+        }
+
+        function getLogicalCoordinates(svgElement, yieldValue, timestampTicks) {
+            const ylmAttr = svgElement.getAttribute('ylm');
+            const xlmAttr = svgElement.getAttribute('xlm');
+
+            const yMapping = parseMapping(ylmAttr);
+            const xMapping = parseMapping(xlmAttr);
+
+            if (!yMapping || !xMapping) {
+                console.warn('Missing or invalid logical mappings');
+                return null;
+            }
+
+            const vx = mapValue(timestampTicks, xMapping);
+            const vy = mapValue(yieldValue, yMapping, true); // Y inverted
+
+            return { vx, vy };
+        }
+
+        function formatTimestamp(ts) {
+            const date = new Date(ts);
+            return date.toLocaleString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        const redColors = ['red', 'crimson', 'tomato', 'firebrick', 'darkred'];
+        const greenColors = ['green', 'limegreen', 'mediumseagreen', 'forestgreen', 'darkgreen'];
+        let color_index = 0;
+
+        async function updateDot(svgElement) {
+            console.log('[VIAIT] updateDot invoked');
+            const { yieldValue, dayChangeValue, dayChangeText, timeText } = await fetchYield();
+            const timestampTicks = Date.now() * 1e4 + 621355968000000000;
+            const coords = getLogicalCoordinates(svgElement, yieldValue, timestampTicks);
+            if (!coords) return;
+
+            let dot = svgElement.querySelector('circle[data-live-dot]');
+            if (!dot) {
+                dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dot.setAttribute('data-live-dot', 'true');
+                dot.setAttribute('r', '5');
+                dot.setAttribute('stroke', 'black');
+                dot.setAttribute('stroke-width', '1');
+                svgElement.appendChild(dot);
+            }
+
+            const colorArray = dayChangeValue >= 0 ? redColors : greenColors;
+            const currentColor = colorArray[color_index];
+            dot.setAttribute('fill', currentColor);
+            color_index = (color_index + 1) % colorArray.length;
+
+            dot.setAttribute('cx', coords.vx);
+            dot.setAttribute('cy', coords.vy);
+
+            // Remove old animations and tooltips
+            dot.querySelectorAll('animate').forEach(anim => dot.removeChild(anim));
+            dot.querySelectorAll('title').forEach(t => dot.removeChild(t));
+
+            // Add tooltip
+            const tooltip = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            tooltip.textContent = `US 10Y Yield: ${yieldValue.toFixed(4)}\nChange: ${dayChangeText}\nTime: ${timeText}`;
+            dot.appendChild(tooltip);
+
+            // Add radius animation
+            const radiusAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+            radiusAnim.setAttribute('attributeName', 'r');
+            radiusAnim.setAttribute('values', '5;7;5');
+            radiusAnim.setAttribute('dur', '0.6s');
+            radiusAnim.setAttribute('repeatCount', 'indefinite');
+            radiusAnim.setAttribute('fill', 'freeze');
+            dot.appendChild(radiusAnim);
+            radiusAnim.beginElement();
+
+            document.getElementById('timestamp').textContent = `Last updated: ${formatTimestamp(Date.now())}`;
+        }
+
+        
+            
+        function loadDefaultSvg(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return response.text();
+                })
+                .then(svgText => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(svgText, 'image/svg+xml');
+                    const svgElement = doc.documentElement;
+
+                    if (!svgElement || svgElement.tagName.toLowerCase() !== 'svg') {
+                        console.warn('[VIAIT] Invalid SVG content.');
+                        return;
+                    }
+
+                    // Replace the <img> with inline SVG
+                    const fallbackImg = svgContainer.querySelector('img');
+                    if (fallbackImg) {
+                        svgContainer.removeChild(fallbackImg);
+                    }
+
+                    svgContainer.appendChild(svgElement);
+                    currentZoomX = 1;
+                    currentZoomY = 1;
+                    updateSvgTransform();
+                    console.log('[VIAIT] Loaded and injected SVG:', url);
+
+                    // ✅ Dot injection added — no line modified
+                    try {
+                        updateDot(svgElement);
+                    } catch (err) {
+                        console.error('[VIAIT] Dot update failed:', err);
+                    }
+                })
+                .catch(error => {
+                    console.error('[VIAIT] Failed to load SVG:', error);
+                });
+        }
+
+        // Only load dynamically if hosted (not file://)
+        if (location.protocol !== 'file:') {
+            window.addEventListener('load', () => {
+                updateSvgTransform();
+                loadDefaultSvg('chart_after_x.svg');
+            });
+        }
+       
+    </script>
 </body>
 
 </html>
