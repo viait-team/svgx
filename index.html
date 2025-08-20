@@ -485,9 +485,11 @@
                     updateSvgTransform();
                     console.log('[VIAIT] Loaded and injected SVG:', url);
 
-                    // ✅ Dot injection added — no line modified
+                    // Dot injection added — no line modified
                     try {
                         updateDot(svgElement);
+
+                        setInterval(() => updateDot(svgElement), 60000);
                     } catch (err) {
                         console.error('[VIAIT] Dot update failed:', err);
                     }
