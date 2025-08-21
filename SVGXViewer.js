@@ -99,7 +99,7 @@ class SVGXViewer {
     setDarkModeBasedOnTime() {
         const currentHour = new Date().getHours();
         if (currentHour >= 8 && currentHour < 19) {
-            document.body.classList.add('dark-mode');
+            this.hostElement.classList.add('dark-mode');
             console.log('[VIAIT] Dark mode enabled based on local time.');
         }
     }

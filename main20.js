@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (location.protocol !== 'file:') {
-      
+          
         viewer.setDarkModeBasedOnTime();
 
         viewer.loadSvgFromUrl('chart_after_20.svg').then(() => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 1. Do the initial update immediately after the SVG loads.
             updateDot(viewer);
-            
+          
             // 2. Start a timer to call updateDot periodically.
             setInterval(() => updateDot(viewer), 60000); // Update every 30 seconds
         });
