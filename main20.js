@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (location.protocol !== 'file:') {
       
+        viewer.setDarkModeBasedOnTime();
+
         viewer.loadSvgFromUrl('chart_after_20.svg').then(() => {
             // The application is now fully responsible for the dot.
             
@@ -18,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setInterval(() => updateDot(viewer), 60000); // Update every 30 seconds
         });
  
-        viewer.setDarkModeBasedOnTime();
-
     }
 
 });
