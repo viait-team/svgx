@@ -113,3 +113,30 @@
 .svgx-viewer.dark-mode svg {
     filter: invert(1) hue-rotate(180deg);
 }
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 8px 12px;
+    background-color: #444;
+    /* Neutral dark gray */
+    color: WhiteSmoke;
+    /* Soft light text */
+    font-size: 0.85em;
+    z-index: 1000;
+    border-top-left-radius: 6px;
+    box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Link styling inside footer */
+footer a {
+    color: #32CD32;
+    /* LimeGreen for good contrast */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
