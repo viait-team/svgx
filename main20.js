@@ -137,7 +137,7 @@ async function fetchYieldData() {
             return {
                 yieldValue: isNaN(yieldValue) ? 0.0 : yieldValue,
                 dayChangeValue: parseFloat(dayChangeText.replace('%', '')),
-                tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}\nTime: ${timeText}`
+                tooltip: `US 20Y Yield: ${yieldRaw}\nChange: ${dayChangeText}\nTime: ${timeText}`
             };
         }
         
