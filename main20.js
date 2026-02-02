@@ -110,38 +110,49 @@ async function fetchYieldData() {
     try {  
         const proxyUrl = 'https://corsproxy.io/?';
         const targetUrl = 'https://tradingeconomics.com/united-states/20-year-bond-yield';
-        const response = await fetch(proxyUrl + targetUrl);
+        const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const html = await response.text();
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const row = doc.querySelector('tr[data-symbol="USGG20Y:IND"]');
+        // Prefer explicit data-symbol, then fall back to heuristics.
+        let row = doc.querySelector('tr[data-symbol="USGG20Y:IND"]');
 
-        if (row) {
-            const cells = row.querySelectorAll('td');
-            const bond = cells[0].innerText.trim();
-            const yieldRaw = cells[1].innerText.trim()
-            const yieldValue = parseFloat(yieldRaw);
-            const dayChangeText = cells[3].innerText;
-            const dayChangeValue = parseFloat(cells[3].innerText.replace('%', '').trim());
-            const monthChange = parseFloat(cells[4].innerText.replace('%', '').trim());
-            const yearChange = parseFloat(cells[5].innerText.replace('%', '').trim());
-
-            var timeText = cells[6].innerText.trim();
-            timeText = new Date().toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
-
-            return {
-                yieldValue: isNaN(yieldValue) ? 0.0 : yieldValue,
-                dayChangeValue: parseFloat(dayChangeText.replace('%', '')),
-                tooltip: `US 20Y Yield: ${yieldRaw}\nChange: ${dayChangeText}\nTime: ${timeText}`
-            };
+        if (!row) {
+            const rows = Array.from(doc.querySelectorAll('table tr'));
+            row = rows.find(r => /20\s*Y|20Y|20-yr|20yr|20 Year|USGG20Y/i.test(r.textContent || ''));
         }
-        
-    
+
+        if (!row) {
+            const els = Array.from(doc.querySelectorAll('*'));
+            const el = els.find(e => /US\s*20Y|USGG20Y|20\s*yr|20\s*Year/i.test(e.textContent || ''));
+            if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
+        }
+
+        if (!row) throw new Error('Could not find data row in HTML.');
+
+        const cells = row.querySelectorAll('td');
+        const rowText = row.textContent || '';
+        const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
+
+        const yieldRaw = cells[1]?.innerText.trim() || nums[0] || null;
+        const dayChangeText = cells[3]?.innerText.trim() || nums[1] || '0';
+        const timeText = cells[6]?.innerText.trim() || new Date().toLocaleTimeString();
+
+        if (!yieldRaw) throw new Error('Yield value not found.');
+
+        const yieldValue = parseFloat(yieldRaw.replace('%', ''));
+        const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
+
+        if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
+
+        return {
+            yieldValue: isNaN(yieldValue) ? 0.0 : yieldValue,
+            dayChangeValue,
+            tooltip: `US 20Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
+        };
+
     } catch (error) {
         console.warn('Yield fetch failed:', error);
         return null;
