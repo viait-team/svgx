@@ -100,6 +100,7 @@ If you want, I can adjust the Action schedule or switch to an official API integ
 
 
 #
+git checkout data/yield.json
 git add .github README.md package.json scripts main.js main20.js main_cbo.js
 git commit -m "chore: add workflow, fetch script, client changes"
 git push origin main
