@@ -1,52 +1,36 @@
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
-const cheerio = require('cheerio');
 
 async function run() {
   try {
-    // TradingEconomics blocks GitHub Actions (HTTP 403).
-    // Switching to CNBC which is more reliable for automation.
-    const targetUrl = 'https://www.cnbc.com/quotes/US10Y';
+    // Yahoo Finance API for ^TNX (10-Year Treasury Note Yield)
+    // This returns JSON, which is much more reliable than scraping HTML.
+    const targetUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?interval=1d&range=1d';
     console.log(`Fetching ${targetUrl}...`);
 
     const headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
     };
 
-    const res = await fetch(targetUrl, { headers, timeout: 15000 });
+    const res = await fetch(targetUrl, { headers, timeout: 10000 });
     
     if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
     }
 
-    const html = await res.text();
-    const $ = cheerio.load(html);
+    const json = await res.json();
+    const result = json.chart?.result?.[0]?.meta;
 
-    // CNBC: Try meta tags first (structured data is more stable)
-    // <meta itemprop="price" content="4.234" />
-    let yieldRaw = $('meta[itemprop="price"]').attr('content');
-    let changeRaw = $('meta[itemprop="priceChange"]').attr('content');
-
-    // Fallback: Try visual elements if meta tags are missing
-    if (!yieldRaw) {
-        yieldRaw = $('.QuoteStrip-lastPrice').first().text().trim();
-        changeRaw = $('.QuoteStrip-changeDown, .QuoteStrip-changeUp').first().text().trim();
+    if (!result) {
+        throw new Error('Yahoo Finance returned invalid JSON structure');
     }
 
-    if (!yieldRaw) {
-        const title = $('title').text().trim();
-        console.error(`Parsing failed. Page title: "${title}" (Length: ${html.length})`);
-        throw new Error('Yield value not found in CNBC HTML.');
-    }
-
-    // Clean up strings (remove %)
-    yieldRaw = yieldRaw.replace('%', '');
-
-    const yieldValue = parseFloat(yieldRaw);
-    const dayChangeValue = parseFloat(changeRaw) || 0;
+    const yieldValue = result.regularMarketPrice;
+    const changePercent = result.regularMarketChangePercent || 0;
+    const timeDate = new Date(result.regularMarketTime * 1000);
     
-    const timeText = new Date().toLocaleTimeString('en-US', { 
+    const timeText = timeDate.toLocaleTimeString('en-US', { 
         timeZone: 'America/New_York', 
         hour: '2-digit', 
         minute: '2-digit',
@@ -55,8 +39,8 @@ async function run() {
 
     const data = {
         yieldValue,
-        dayChangeValue,
-        tooltip: `US 10Y Yield: ${yieldValue}%\nChange: ${dayChangeValue}%\nTime: ${timeText}`,
+        dayChangeValue: changePercent,
+        tooltip: `US 10Y Yield: ${yieldValue}%\nChange: ${changePercent.toFixed(2)}%\nTime: ${timeText}`,
         updatedAt: new Date().toISOString()
     };
 
