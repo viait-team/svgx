@@ -114,20 +114,20 @@ async function updateDot(viewer) {
 async function getFinancialDotData(viewer) {
 
     const data = await fetchYieldData();
-    if (!data) return null;
+        try {
+            // Prefer server-generated JSON when available on GitHub Pages.
+            try {
+                const local = await fetch('data/yield.json?ts=' + Date.now(), { cache: 'no-store' });
+                if (local && local.ok) {
+                    const j = await local.json();
+                    if (j && typeof j.yieldValue === 'number') return j;
+                }
+            } catch (e) {
+                // ignore and fall back to proxy scraping
+            }
 
-    const timestampTicks = Date.now() * 1e4 + 621355968000000000;
-    const yieldValue = data.yieldValue;
-    // alert(yieldValue);
+            const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
 
-    // Use the viewer's public helper method to get coordinates.
-    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue, false);
-    if (!coords) return null;
-    
-    // Return the final "paint instructions" for the dot.
-    return {
-        cx: coords.vx,
-        cy: coords.vy,
             const proxies = [
                 'https://corsproxy.io/?',
                 'https://thingproxy.freeboard.io/fetch/',
@@ -153,18 +153,48 @@ async function getFinancialDotData(viewer) {
             }
 
             const html = await response.text();
-    try {
-        const proxyUrl = 'https://corsproxy.io/?';
-        const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
-        const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-        if (!response.ok) {
-            debugStatus(`HTTP ${response.status} when fetching ${targetUrl}`);
-            throw new Error(`HTTP ${response.status}`);
-        }
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
+            let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
+            if (!row) {
+                const rows = Array.from(doc.querySelectorAll('table tr'));
+                row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
+            }
+
+            if (!row) {
+                const els = Array.from(doc.querySelectorAll('*'));
+                const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
+                if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
+            }
+
+            if (!row) throw new Error('Could not find data row in HTML.');
+
+            const tds = row.querySelectorAll('td');
+            const rowText = row.textContent || '';
+            const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
+
+            const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
+            const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
+            const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
+
+            if (!yieldRaw) throw new Error('Yield value not found.');
+
+            const yieldValue = parseFloat(yieldRaw.replace('%', ''));
+            const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
+
+            if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
+
+            return {
+                yieldValue,
+                dayChangeValue,
+                tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
+            };
+        } catch (error) {
+            console.warn('Yield fetch failed:', error);
+            debugStatus('Yield fetch failed: ' + (error && error.message ? error.message : String(error)));
+            return null;
+        }
         let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
         if (!row) {
             const rows = Array.from(doc.querySelectorAll('table tr'));
