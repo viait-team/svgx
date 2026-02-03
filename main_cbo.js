@@ -2,32 +2,32 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-// Simple on-page debug status for fetch issues (visible on GitHub Pages)
-function debugStatus(msg) {
-    try {
-        let el = document.getElementById('fetch-status');
-        if (!el) {
-            el = document.createElement('div');
-            el.id = 'fetch-status';
-            Object.assign(el.style, {
-                position: 'fixed',
-                right: '8px',
-                bottom: '8px',
-                background: 'rgba(0,0,0,0.7)',
-                color: 'white',
-                padding: '6px 10px',
-                fontSize: '12px',
-                fontFamily: 'monospace',
-                borderRadius: '4px',
-                zIndex: 99999
-            });
-            document.body.appendChild(el);
+    // Simple on-page debug status for fetch issues (visible on GitHub Pages)
+    function debugStatus(msg) {
+        try {
+            let el = document.getElementById('fetch-status');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'fetch-status';
+                Object.assign(el.style, {
+                    position: 'fixed',
+                    right: '8px',
+                    bottom: '8px',
+                    background: 'rgba(0,0,0,0.7)',
+                    color: 'white',
+                    padding: '6px 10px',
+                    fontSize: '12px',
+                    fontFamily: 'monospace',
+                    borderRadius: '4px',
+                    zIndex: 99999
+                });
+                document.body.appendChild(el);
+            }
+            el.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
+        } catch (e) {
+            console.warn('debugStatus failed', e);
         }
-        el.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
-    } catch (e) {
-        console.warn('debugStatus failed', e);
     }
-}
 
 
     const viewer = new SVGXViewer('#viewer-root', {
@@ -35,15 +35,15 @@ function debugStatus(msg) {
     });
 
     if (location.protocol !== 'file:') {
-        
+
         viewer.setDarkModeBasedOnTime();
 
         viewer.loadSvgFromUrl('cbo_report.svg').then(() => {
             // The application is now fully responsible for the dot.
-            
+
             // 1. Do the initial update immediately after the SVG loads.
             updateDot(viewer);
-            
+
             // 2. Start a timer to call updateDot periodically.
             setInterval(() => updateDot(viewer), 60000); // Update every 30 seconds
         });
@@ -77,7 +77,7 @@ async function updateDot(viewer) {
         dot.setAttribute('stroke-width', '1');
         viewer.svgElement.appendChild(dot);
     }
- 
+
     // Update the dot's visual properties based on the fetched data.
     dot.setAttribute('fill', data.color || 'red');
     dot.setAttribute('cx', data.cx);
@@ -106,68 +106,20 @@ async function updateDot(viewer) {
     radiusAnim.beginElement();
 }
 
-/**
- * A bridge function that fetches financial data and uses the viewer's
- * helper method to translate it into SVG coordinates.
- * @param {SVGXViewer} viewer The viewer instance.
- */
-// Helper functions adapted from SVGXViewer.js to handle custom mapping
-function _parseMapping(attr) {
-    if (!attr) return null;
-    try {
-        const values = JSON.parse(attr.replace(/E\+?(\d+)/g, 'e$1'));
-        if (Array.isArray(values) && values.length === 4) {
-            return {
-                domainMin: parseFloat(values[0]),
-                domainMax: parseFloat(values[1]),
-                rangeMin: parseFloat(values[2]),
-                rangeMax: parseFloat(values[3])
-            };
-        }
-    } catch (e) {
-        console.warn('Invalid mapping:', attr);
-    }
-    return null;
-}
-
-function _mapValue(value, mapping, invert = false) {
-    const { domainMin, domainMax, rangeMin, rangeMax } = mapping;
-    const ratio = (value - domainMin) / (domainMax - domainMin);
-    const adjusted = invert ? 1 - ratio : ratio;
-    return rangeMin + adjusted * (rangeMax - rangeMin);
-}
-
 async function getFinancialDotData(viewer) {
     const data = await fetchYieldData();
     if (!data) return null;
 
-    // CBO specific logic to correct the y-scale
     const timestampTicks = Date.now() * 1e4 + 621355968000000000;
     const yieldValue = data.yieldValue;
 
-    if (!viewer.svgElement) return null;
-    const xlmAttr = viewer.svgElement.getAttribute('xlm');
-    const xMapping = _parseMapping(xlmAttr);
-
-    // Corrected y-mapping for cbo_report.svg to match the visible axis
-    const yMapping = {
-        domainMin: 0.0,
-        domainMax: 6.0,
-        rangeMin: 440.61, // Pixel value for 0 on the y-axis
-        rangeMax: 75.27   // Pixel value for 6 on the y-axis
-    };
-
-    if (!xMapping) return null;
-    
-    // Manually map coordinates using the corrected y-scale
-    const vx = _mapValue(timestampTicks, xMapping, false); // x-axis is not inverted
-    const vy = _mapValue(yieldValue, yMapping, false);    // y-axis is not inverted
-
-    if (isNaN(vx) || isNaN(vy)) return null;
+    // Use the viewer's public helper method to get coordinates.
+    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue, false);
+    if (!coords) return null;
 
     return {
-        cx: vx,
-        cy: vy,
+        cx: coords.vx,
+        cy: coords.vy,
         color: data.dayChangeValue >= 0 ? 'crimson' : 'limegreen',
         tooltip: data.tooltip
     };
@@ -185,70 +137,70 @@ async function fetchYieldData() {
         } catch (e) {
             // ignore and fall back to proxy scraping
         }
-    const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
+        const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
 
-    const proxies = [
-        'https://corsproxy.io/?',
-        'https://thingproxy.freeboard.io/fetch/',
-        'https://api.allorigins.win/raw?url='
-    ];
+        const proxies = [
+            'https://corsproxy.io/?',
+            'https://thingproxy.freeboard.io/fetch/',
+            'https://api.allorigins.win/raw?url='
+        ];
 
-    let response = null;
-    let lastErr = null;
-    for (const p of proxies) {
-        const fetchUrl = p.includes('url=') ? p + encodeURIComponent(targetUrl) : p + targetUrl;
-        try {
-            response = await fetch(fetchUrl);
-            if (response && response.ok) break;
-            lastErr = new Error(`HTTP ${response ? response.status : 'NO_RESPONSE'} from ${fetchUrl}`);
-        } catch (err) {
-            lastErr = err;
+        let response = null;
+        let lastErr = null;
+        for (const p of proxies) {
+            const fetchUrl = p.includes('url=') ? p + encodeURIComponent(targetUrl) : p + targetUrl;
+            try {
+                response = await fetch(fetchUrl);
+                if (response && response.ok) break;
+                lastErr = new Error(`HTTP ${response ? response.status : 'NO_RESPONSE'} from ${fetchUrl}`);
+            } catch (err) {
+                lastErr = err;
+            }
         }
-    }
 
-    if (!response || !response.ok) {
-        debugStatus(lastErr ? lastErr.message : 'No response from proxies');
-        throw lastErr || new Error('No proxy response');
-    }
+        if (!response || !response.ok) {
+            debugStatus(lastErr ? lastErr.message : 'No response from proxies');
+            throw lastErr || new Error('No proxy response');
+        }
 
-    const html = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
 
-    let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
-    if (!row) {
-        const rows = Array.from(doc.querySelectorAll('table tr'));
-        row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
-    }
+        let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
+        if (!row) {
+            const rows = Array.from(doc.querySelectorAll('table tr'));
+            row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
+        }
 
-    if (!row) {
-        const els = Array.from(doc.querySelectorAll('*'));
-        const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
-        if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
-    }
+        if (!row) {
+            const els = Array.from(doc.querySelectorAll('*'));
+            const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
+            if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
+        }
 
-    if (!row) throw new Error('Could not find data row in HTML.');
+        if (!row) throw new Error('Could not find data row in HTML.');
 
-    const tds = row.querySelectorAll('td');
-    const rowText = row.textContent || '';
-    const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
+        const tds = row.querySelectorAll('td');
+        const rowText = row.textContent || '';
+        const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
 
-    const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
-    const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
-    const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
+        const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
+        const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
+        const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
 
-    if (!yieldRaw) throw new Error('Yield value not found.');
+        if (!yieldRaw) throw new Error('Yield value not found.');
 
-    const yieldValue = parseFloat(yieldRaw.replace('%', ''));
-    const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
+        const yieldValue = parseFloat(yieldRaw.replace('%', ''));
+        const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
 
-    if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
+        if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
 
-    return {
-        yieldValue,
-        dayChangeValue,
-        tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
-    };
+        return {
+            yieldValue,
+            dayChangeValue,
+            tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
+        };
     } catch (error) {
         console.warn('Yield fetch failed:', error);
         debugStatus('Yield fetch failed: ' + (error && error.message ? error.message : String(error)));
