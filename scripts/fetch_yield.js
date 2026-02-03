@@ -3,14 +3,35 @@ const path = require('path');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-async function fetchPage(url) {
-  const res = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+async function fetchPageWithFallback(targetUrl) {
+  const proxies = [
+    '', // Try direct first
+    'https://corsproxy.io/?',
+    'https://api.allorigins.win/raw?url='
+  ];
+
+  let lastError = null;
+
+  for (const proxy of proxies) {
+    try {
+      const url = proxy 
+        ? (proxy.includes('url=') ? proxy + encodeURIComponent(targetUrl) : proxy + targetUrl)
+        : targetUrl;
+      
+      console.log(`Fetching via: ${proxy || 'Direct'}...`);
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36' },
+        timeout: 15000
+      });
+      
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (err) {
+      console.warn(`Failed via ${proxy || 'Direct'}: ${err.message}`);
+      lastError = err;
     }
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
+  }
+  throw lastError || new Error('All fetch attempts failed');
 }
 
 function parse10yFromHtml(html) {
@@ -46,7 +67,7 @@ function parse10yFromHtml(html) {
 (async () => {
   try {
     const target = 'https://tradingeconomics.com/united-states/government-bond-yield';
-    const html = await fetchPage(target);
+    const html = await fetchPageWithFallback(target);
     const parsed = parse10yFromHtml(html);
     if (!parsed) throw new Error('Could not parse 10Y');
     const outDir = path.join(__dirname, '..', 'data');

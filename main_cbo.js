@@ -114,7 +114,6 @@ async function updateDot(viewer) {
 async function getFinancialDotData(viewer) {
 
     const data = await fetchYieldData();
-        try {
             // Prefer server-generated JSON when available on GitHub Pages.
             try {
                 const local = await fetch('data/yield.json?ts=' + Date.now(), { cache: 'no-store' });
@@ -126,112 +125,72 @@ async function getFinancialDotData(viewer) {
                 // ignore and fall back to proxy scraping
             }
 
-            const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
+    // ... (rest of logic is handled by fetchYieldData in main.js if shared, 
+    // but here it seems you might want to copy the logic from main.js or import it)
+    // For now, I will assume you want the same logic as main.js:
+    
+    const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
 
-            const proxies = [
-                'https://corsproxy.io/?',
-                'https://thingproxy.freeboard.io/fetch/',
-                'https://api.allorigins.win/raw?url='
-            ];
+    const proxies = [
+        'https://corsproxy.io/?',
+        'https://thingproxy.freeboard.io/fetch/',
+        'https://api.allorigins.win/raw?url='
+    ];
 
-            let response = null;
-            let lastErr = null;
-            for (const p of proxies) {
-                const fetchUrl = p.includes('url=') ? p + encodeURIComponent(targetUrl) : p + targetUrl;
-                try {
-                    response = await fetch(fetchUrl);
-                    if (response && response.ok) break;
-                    lastErr = new Error(`HTTP ${response ? response.status : 'NO_RESPONSE'} from ${fetchUrl}`);
-                } catch (err) {
-                    lastErr = err;
-                }
-            }
-
-            if (!response || !response.ok) {
-                debugStatus(lastErr ? lastErr.message : 'No response from proxies');
-                throw lastErr || new Error('No proxy response');
-            }
-
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
-            if (!row) {
-                const rows = Array.from(doc.querySelectorAll('table tr'));
-                row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
-            }
-
-            if (!row) {
-                const els = Array.from(doc.querySelectorAll('*'));
-                const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
-                if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
-            }
-
-            if (!row) throw new Error('Could not find data row in HTML.');
-
-            const tds = row.querySelectorAll('td');
-            const rowText = row.textContent || '';
-            const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
-
-            const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
-            const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
-            const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
-
-            if (!yieldRaw) throw new Error('Yield value not found.');
-
-            const yieldValue = parseFloat(yieldRaw.replace('%', ''));
-            const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
-
-            if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
-
-            return {
-                yieldValue,
-                dayChangeValue,
-                tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
-            };
-        } catch (error) {
-            console.warn('Yield fetch failed:', error);
-            debugStatus('Yield fetch failed: ' + (error && error.message ? error.message : String(error)));
-            return null;
+    let response = null;
+    let lastErr = null;
+    for (const p of proxies) {
+        const fetchUrl = p.includes('url=') ? p + encodeURIComponent(targetUrl) : p + targetUrl;
+        try {
+            response = await fetch(fetchUrl);
+            if (response && response.ok) break;
+            lastErr = new Error(`HTTP ${response ? response.status : 'NO_RESPONSE'} from ${fetchUrl}`);
+        } catch (err) {
+            lastErr = err;
         }
-        let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
-        if (!row) {
-            const rows = Array.from(doc.querySelectorAll('table tr'));
-            row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
-        }
-
-        if (!row) {
-            const els = Array.from(doc.querySelectorAll('*'));
-            const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
-            if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
-        }
-
-        if (!row) throw new Error('Could not find data row in HTML.');
-
-        const tds = row.querySelectorAll('td');
-        const rowText = row.textContent || '';
-        const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
-
-        const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
-        const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
-        const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
-
-        if (!yieldRaw) throw new Error('Yield value not found.');
-
-        const yieldValue = parseFloat(yieldRaw.replace('%', ''));
-        const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
-
-        if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
-
-        return {
-            yieldValue,
-            dayChangeValue,
-            tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
-        };
-    } catch (error) {
-        console.warn('Yield fetch failed:', error);
-        debugStatus('Yield fetch failed: ' + (error && error.message ? error.message : String(error)));
-        return null;
     }
+
+    if (!response || !response.ok) {
+        debugStatus(lastErr ? lastErr.message : 'No response from proxies');
+        throw lastErr || new Error('No proxy response');
+    }
+
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    let row = doc.querySelector('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
+    if (!row) {
+        const rows = Array.from(doc.querySelectorAll('table tr'));
+        row = rows.find(r => /10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test(r.textContent || ''));
+    }
+
+    if (!row) {
+        const els = Array.from(doc.querySelectorAll('*'));
+        const el = els.find(e => /US\s*10Y|USGG10YR|10\s*yr|10\s*Year/i.test(e.textContent || ''));
+        if (el) row = el.closest('tr') || el.closest('table')?.querySelector('tr');
+    }
+
+    if (!row) throw new Error('Could not find data row in HTML.');
+
+    const tds = row.querySelectorAll('td');
+    const rowText = row.textContent || '';
+    const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
+
+    const yieldRaw = tds[1]?.textContent.trim() || nums[0] || null;
+    const dayChangeText = tds[3]?.textContent.trim() || nums[1] || '0';
+    const timeText = tds[6]?.textContent.trim() || new Date().toLocaleTimeString();
+
+    if (!yieldRaw) throw new Error('Yield value not found.');
+
+    const yieldValue = parseFloat(yieldRaw.replace('%', ''));
+    const dayChangeValue = parseFloat((dayChangeText || '').replace('%', '')) || 0;
+
+    if (Number.isNaN(yieldValue)) throw new Error('Parsed yield is NaN.');
+
+    return {
+        yieldValue,
+        dayChangeValue,
+        tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`
+    };
 }
