@@ -2,6 +2,34 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+// Simple on-page debug status for fetch issues (visible on GitHub Pages)
+function debugStatus(msg) {
+    try {
+        let el = document.getElementById('fetch-status');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'fetch-status';
+            Object.assign(el.style, {
+                position: 'fixed',
+                right: '8px',
+                bottom: '8px',
+                background: 'rgba(0,0,0,0.7)',
+                color: 'white',
+                padding: '6px 10px',
+                fontSize: '12px',
+                fontFamily: 'monospace',
+                borderRadius: '4px',
+                zIndex: 99999
+            });
+            document.body.appendChild(el);
+        }
+        el.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
+    } catch (e) {
+        console.warn('debugStatus failed', e);
+    }
+}
+
+
     const viewer = new SVGXViewer('#viewer-root', {
         placeholderImageUrl: 'cbo_report.svg'
     });
@@ -100,17 +128,39 @@ async function getFinancialDotData(viewer) {
     return {
         cx: coords.vx,
         cy: coords.vy,
-        color: data.dayChangeValue >= 0 ? 'crimson' : 'limegreen',
-        tooltip: data.tooltip
-    };
-}
+            const proxies = [
+                'https://corsproxy.io/?',
+                'https://thingproxy.freeboard.io/fetch/',
+                'https://api.allorigins.win/raw?url='
+            ];
 
-async function fetchYieldData() {
+            let response = null;
+            let lastErr = null;
+            for (const p of proxies) {
+                const fetchUrl = p.includes('url=') ? p + encodeURIComponent(targetUrl) : p + targetUrl;
+                try {
+                    response = await fetch(fetchUrl);
+                    if (response && response.ok) break;
+                    lastErr = new Error(`HTTP ${response ? response.status : 'NO_RESPONSE'} from ${fetchUrl}`);
+                } catch (err) {
+                    lastErr = err;
+                }
+            }
+
+            if (!response || !response.ok) {
+                debugStatus(lastErr ? lastErr.message : 'No response from proxies');
+                throw lastErr || new Error('No proxy response');
+            }
+
+            const html = await response.text();
     try {
         const proxyUrl = 'https://corsproxy.io/?';
         const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
         const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        if (!response.ok) {
+            debugStatus(`HTTP ${response.status} when fetching ${targetUrl}`);
+            throw new Error(`HTTP ${response.status}`);
+        }
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
@@ -151,6 +201,7 @@ async function fetchYieldData() {
         };
     } catch (error) {
         console.warn('Yield fetch failed:', error);
+        debugStatus('Yield fetch failed: ' + (error && error.message ? error.message : String(error)));
         return null;
     }
 }
