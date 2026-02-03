@@ -111,25 +111,63 @@ async function updateDot(viewer) {
  * helper method to translate it into SVG coordinates.
  * @param {SVGXViewer} viewer The viewer instance.
  */
+// Helper functions adapted from SVGXViewer.js to handle custom mapping
+function _parseMapping(attr) {
+    if (!attr) return null;
+    try {
+        const values = JSON.parse(attr.replace(/E\+?(\d+)/g, 'e$1'));
+        if (Array.isArray(values) && values.length === 4) {
+            return {
+                domainMin: parseFloat(values[0]),
+                domainMax: parseFloat(values[1]),
+                rangeMin: parseFloat(values[2]),
+                rangeMax: parseFloat(values[3])
+            };
+        }
+    } catch (e) {
+        console.warn('Invalid mapping:', attr);
+    }
+    return null;
+}
+
+function _mapValue(value, mapping, invert = false) {
+    const { domainMin, domainMax, rangeMin, rangeMax } = mapping;
+    const ratio = (value - domainMin) / (domainMax - domainMin);
+    const adjusted = invert ? 1 - ratio : ratio;
+    return rangeMin + adjusted * (rangeMax - rangeMin);
+}
+
 async function getFinancialDotData(viewer) {
     const data = await fetchYieldData();
     if (!data) return null;
 
-    // CBO specific logic if needed, otherwise map 10Y yield to coordinates
-    // Assuming CBO chart uses similar mapping logic to main chart
-    // If CBO chart has different logic, adjust here.
-    
-    // For now, we just return the data formatted for the dot
-    // You might need to adjust the timestampTicks or mapping based on the specific SVG
+    // CBO specific logic to correct the y-scale
     const timestampTicks = Date.now() * 1e4 + 621355968000000000;
     const yieldValue = data.yieldValue;
 
-    const coords = viewer.getLogicalCoordinates(timestampTicks, yieldValue);
-    if (!coords) return null;
+    if (!viewer.svgElement) return null;
+    const xlmAttr = viewer.svgElement.getAttribute('xlm');
+    const xMapping = _parseMapping(xlmAttr);
+
+    // Corrected y-mapping for cbo_report.svg to match the visible axis
+    const yMapping = {
+        domainMin: 0.0,
+        domainMax: 6.0,
+        rangeMin: 440.61, // Pixel value for 0 on the y-axis
+        rangeMax: 75.27   // Pixel value for 6 on the y-axis
+    };
+
+    if (!xMapping) return null;
+    
+    // Manually map coordinates using the corrected y-scale
+    const vx = _mapValue(timestampTicks, xMapping, false); // x-axis is not inverted
+    const vy = _mapValue(yieldValue, yMapping, true);    // y-axis is inverted
+
+    if (isNaN(vx) || isNaN(vy)) return null;
 
     return {
-        cx: coords.vx,
-        cy: coords.vy,
+        cx: vx,
+        cy: vy,
         color: data.dayChangeValue >= 0 ? 'crimson' : 'limegreen',
         tooltip: data.tooltip
     };
