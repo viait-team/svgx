@@ -137,6 +137,16 @@ async function getFinancialDotData(viewer) {
 
 async function fetchYieldData() {
     try {
+        // Prefer server-generated JSON when available on GitHub Pages.
+        try {
+            const local = await fetch('data/yield.json?ts=' + Date.now(), { cache: 'no-store' });
+            if (local && local.ok) {
+                const j = await local.json();
+                if (j && typeof j.yieldValue === 'number') return j;
+            }
+        } catch (e) {
+            // ignore and fall back to proxy scraping
+        }
     const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
 
     const proxies = [
