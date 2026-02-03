@@ -64,12 +64,43 @@ function parse10yFromHtml(html) {
   };
 }
 
+function parseCNBCFromHtml(html) {
+  const $ = cheerio.load(html);
+  // CNBC selectors
+  const yieldRaw = $('.QuoteStrip-lastPrice').first().text().trim().replace('%', '');
+  const changeRaw = $('.QuoteStrip-changeDown, .QuoteStrip-changeUp').first().text().trim();
+  
+  if (!yieldRaw) return null;
+
+  const yieldValue = parseFloat(yieldRaw);
+  const dayChangeValue = parseFloat(changeRaw) || 0;
+
+  if (Number.isNaN(yieldValue)) return null;
+
+  return {
+    yieldValue,
+    dayChangeValue,
+    tooltip: `US 10Y Yield: ${yieldRaw}%\nChange: ${changeRaw}\nTime: ${new Date().toLocaleTimeString()}`
+  };
+}
+
 (async () => {
   try {
+    // 1. Try TradingEconomics
     const target = 'https://tradingeconomics.com/united-states/government-bond-yield';
-    const html = await fetchPageWithFallback(target);
-    const parsed = parse10yFromHtml(html);
-    if (!parsed) throw new Error('Could not parse 10Y');
+    let parsed = null;
+    
+    try {
+      const html = await fetchPageWithFallback(target);
+      parsed = parse10yFromHtml(html);
+    } catch (e) {
+      console.warn('TradingEconomics failed, trying CNBC...');
+      const cnbcHtml = await fetchPageWithFallback('https://www.cnbc.com/quotes/US10Y');
+      parsed = parseCNBCFromHtml(cnbcHtml);
+    }
+
+    if (!parsed) throw new Error('Could not parse 10Y yield from any source');
+
     const outDir = path.join(__dirname, '..', 'data');
     if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
     const outPath = path.join(outDir, 'yield.json');
