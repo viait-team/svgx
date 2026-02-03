@@ -34,7 +34,11 @@ async function run() {
         changeRaw = $('.QuoteStrip-changeDown, .QuoteStrip-changeUp').first().text().trim();
     }
 
-    if (!yieldRaw) throw new Error('Yield value not found in CNBC HTML.');
+    if (!yieldRaw) {
+        const title = $('title').text().trim();
+        console.error(`Parsing failed. Page title: "${title}" (Length: ${html.length})`);
+        throw new Error('Yield value not found in CNBC HTML.');
+    }
 
     // Clean up strings (remove %)
     yieldRaw = yieldRaw.replace('%', '');
