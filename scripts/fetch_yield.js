@@ -5,10 +5,11 @@ const cheerio = require('cheerio');
 
 async function run() {
   try {
-    const targetUrl = 'https://tradingeconomics.com/united-states/government-bond-yield';
+    // TradingEconomics blocks GitHub Actions (HTTP 403).
+    // Switching to CNBC which is more reliable for automation.
+    const targetUrl = 'https://www.cnbc.com/quotes/US10Y';
     console.log(`Fetching ${targetUrl}...`);
 
-    // Use a standard User-Agent to try to bypass basic bot detection
     const headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
     };
@@ -22,48 +23,36 @@ async function run() {
     const html = await res.text();
     const $ = cheerio.load(html);
 
-    // Logic similar to main.js but using cheerio
-    let row = $('table.table.table-condensed tr[data-symbol="USGG10YR:IND"]');
+    // CNBC: Try meta tags first (structured data is more stable)
+    // <meta itemprop="price" content="4.234" />
+    let yieldRaw = $('meta[itemprop="price"]').attr('content');
+    let changeRaw = $('meta[itemprop="priceChange"]').attr('content');
 
-    if (row.length === 0) {
-        $('table tr').each((i, el) => {
-            if (/10\s*Y|10Y|10-yr|10yr|10 Year|USGG10YR/i.test($(el).text())) {
-                row = $(el);
-                return false;
-            }
-        });
-    }
-
-    if (row.length === 0) {
-        throw new Error('Could not find data row in HTML.');
-    }
-
-    const tds = row.find('td');
-    let yieldRaw = $(tds[1]).text().trim();
-    let dayChangeText = $(tds[3]).text().trim();
-    const timeText = $(tds[6]).text().trim();
-
+    // Fallback: Try visual elements if meta tags are missing
     if (!yieldRaw) {
-            // Fallback regex
-            const rowText = row.text();
-            const nums = rowText.match(/-?\d+\.\d+%?|-?\d+%?/g) || [];
-            yieldRaw = nums[0];
-            dayChangeText = nums[1] || '0';
+        yieldRaw = $('.QuoteStrip-lastPrice').first().text().trim();
+        changeRaw = $('.QuoteStrip-changeDown, .QuoteStrip-changeUp').first().text().trim();
     }
 
-    if (!yieldRaw) throw new Error('Yield value not found.');
+    if (!yieldRaw) throw new Error('Yield value not found in CNBC HTML.');
 
     // Clean up strings (remove %)
     yieldRaw = yieldRaw.replace('%', '');
-    dayChangeText = dayChangeText.replace('%', '');
 
     const yieldValue = parseFloat(yieldRaw);
-    const dayChangeValue = parseFloat(dayChangeText) || 0;
+    const dayChangeValue = parseFloat(changeRaw) || 0;
+    
+    const timeText = new Date().toLocaleTimeString('en-US', { 
+        timeZone: 'America/New_York', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZoneName: 'short'
+    });
 
     const data = {
         yieldValue,
         dayChangeValue,
-        tooltip: `US 10Y Yield: ${yieldRaw}\nChange: ${dayChangeText}%\nTime: ${timeText}`,
+        tooltip: `US 10Y Yield: ${yieldValue}%\nChange: ${dayChangeValue}%\nTime: ${timeText}`,
         updatedAt: new Date().toISOString()
     };
 
