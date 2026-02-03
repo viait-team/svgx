@@ -161,7 +161,7 @@ async function getFinancialDotData(viewer) {
     
     // Manually map coordinates using the corrected y-scale
     const vx = _mapValue(timestampTicks, xMapping, false); // x-axis is not inverted
-    const vy = _mapValue(yieldValue, yMapping, true);    // y-axis is inverted
+    const vy = _mapValue(yieldValue, yMapping, false);    // y-axis is not inverted
 
     if (isNaN(vx) || isNaN(vy)) return null;
 
